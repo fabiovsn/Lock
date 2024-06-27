@@ -1,0 +1,362 @@
+body {
+  background-color: white;
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#header {
+  height: 6rem;
+  width: 116rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+#logo_header{
+  width: 6rem;
+  height: 6rem;
+}
+
+#design_header{
+  background: linear-gradient(180deg, #3b78ff, #18b2ff);
+  width: 94%;
+  border-radius: 0px 24px 0px 24px;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  vertical-align: center;
+  font-size: 4rem;
+}
+
+#container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 120rem;
+}
+
+#navbar {
+  height: 3rem;
+  width: 98%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+#add-search {
+  margin-top: 6rem;
+  width: 97%;
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+}
+
+#new-service,
+#search {
+  margin: 0.5rem;
+}
+
+#list-services {
+  margin-top: 2rem;
+}
+
+#tb_services {
+  text-align: center;
+  margin-bottom: 8rem;
+}
+
+#tb_services th{
+  background-color: #2e2e2e;
+  height: 2rem;
+  color:#ecebeb;
+  font-family: "Roboto", sans-serif;
+  font-weight: 300;
+  font-style: normal;
+  font-size: 16px;
+  width: 16rem;
+}
+
+#tb_services td{
+  font-size: 14px;
+  height: 2rem;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+tr:nth-child(odd) {
+  background-color: #ffffff;
+}
+
+tr:hover {
+  background-color: #ecebeb;
+}
+
+.btn_toggle, .btn_edit, .btn_delete{
+  width: 4.8rem;
+  height: 2rem;
+  margin: 1px;
+  border-radius: 4px;
+  border-style: none;
+}
+
+.btn_toggle{
+  background-color: #e3c77b;
+  color: #69541a;
+}
+
+.btn_toggle:hover{
+  background-color: #f8e4ac;
+}
+
+.btn_edit{
+  background-color: #e3a56b;
+  color: #914a08;
+}
+
+.btn_edit:hover{
+  background-color: #f8c798;
+}
+
+.btn_delete{
+  background-color: #e36b6b;
+  color: #691f1f;
+}
+
+.btn_delete:hover{
+  background-color: #f39393;
+}
+
+#btn_new_service{
+  width: 12rem;
+  height: 3rem;
+  background-color: #a6c88c;
+  border-radius: 4px;
+  border-style: none;
+  font-size: 16px;
+  color: #324d1e;
+}
+
+#btn_new_service:hover{
+  background-color: #badda0;
+}
+
+#btn_search{
+  width: 4rem;
+  height: 2rem;
+  background-color: #71b7e6;
+  border-style: none;
+  border-radius: 4px;
+  color: #154b6e;
+  font-size: 14px;
+  vertical-align: middle;
+}
+
+#img_search{
+  width: 16px;
+  height: 16px;
+  vertical-align: middle;
+}
+
+#btn_search:hover{
+  background-color: #a1c7e0;
+}
+
+#btn_export{
+  margin-left: 4rem;
+  width: 12rem;
+  height: 3rem;
+  background-color: #acacac;
+  border-radius: 4px;
+  border-style: none;
+  font-size: 16px;
+  color: #2e2e2e;
+}
+
+#btn_export:hover{
+  background-color: #dad7d7;
+}
+
+#inp_search{
+  width: 24rem;
+  height: 2rem;
+  border-color: #71b7e6;
+  border-radius: 4px;
+}
+
+
+#footer {
+  margin-top: 5rem;
+  width: 114rem;
+  background-color: #3b78ff;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  padding-left: 2rem;
+  color: white;
+  border-radius: 0px 24px 0px 24px;
+}
+
+
+#service-form {
+  display: flex;
+  flex-direction: row;
+}
+
+#service-form label {
+  margin-right: 10px;
+  /* Espaçamento entre o rótulo e o campo */
+}
+
+/* Estilos adicionais para os campos de entrada */
+#service-form input[type="text"],
+#service-form input[type="password"],
+#service-form input[type="email"] {
+  width: 200px;
+  /* Largura dos campos de entrada */
+}
+
+#service-form button {
+  margin-left: 10px;
+  /* Espaçamento entre o campo de entrada e o botão */
+}
+
+
+.context-menu {
+  position: absolute;
+  display: none;
+  z-index: 1000;
+  background-color: white;
+  border: 1px solid #ccc;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+  font-family: "Roboto", sans-serif;
+  font-size: 14px;
+  border-radius: 6px;
+}
+
+.context-menu hr{
+  width: 98%;
+  color: rgb(134, 133, 133);
+}
+
+.context-menu ul {
+  list-style-type: none;
+  padding: 10px;
+  margin: 0;
+}
+
+.context-menu ul li {
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.context-menu ul li:hover {
+  background-color: #eee;
+}
+
+
+.edit_service_name{
+  width: 12rem;
+  width: 100%;
+  height: 100%;
+  border-style: none;
+}
+
+.edit_user_name{
+  width: 12rem;
+  width: 100%;
+  height: 100%;
+  border-style: none;
+}
+
+.edit_password{
+  width: 12rem;
+  width: 100%;
+  height: 100%;
+  border-style: none;
+}
+
+/* Password generator */
+
+#password-generator {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+}
+
+.modal-content {
+  background-color: #fff;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  box-shadow: 6px 6px 1px 1px #888;
+  width: 80%;
+  max-width: 500px;
+  border-radius: 10px;
+  font-size: 14px;
+}
+
+#btn-password-generator{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+#generate-btn, #continue-btn, #cancel-btn{
+  width: 6rem;
+  height: 2rem;
+  margin: 1px;
+  border-radius: 4px;
+  border-style: none;
+}
+
+
+#generate-btn{
+  background-color: #71b7e6;
+  color: #154b6e;
+}
+
+#continue-btn{
+  background-color: #a6c88c;
+  color: #324d1e;
+}
+
+#cancel-btn{
+  background-color: #e36b6b;
+  color: #691f1f;
+}
+
+#generate-btn:hover{
+  background-color: #afd2e9;
+}
+
+#continue-btn:hover{
+  background-color: #cbd6c2;
+}
+
+#cancel-btn:hover{
+  background-color: #e29a9a;
+}
+
+
+#new-service-form{
+  border-style: solid;
+  border-color: #2e2e2e;
+  border-width: 1px;
+  padding: 4px;
+  width: 115rem;
+  margin-top: 22px;
+}
