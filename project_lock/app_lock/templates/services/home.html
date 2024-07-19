@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   {% load static %}
   <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
@@ -7,88 +8,124 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+    rel="stylesheet">
   <title>Lock - Gerenciador de senhas</title>
 </head>
+
 <body>
+
+  <!-- Header -->
+
   <div id="header">
-    <img id="logo_header" src="{% static 'img/lock_logo.png' %}">
-    <div id="design_header">LOCK</div>
+    <div id="header_sub">
+      <img id="logo_header" src="{% static 'img/lock_logo_3.png' %}">
+      <div id="name_header">LOCK</div>
+    </div>
+    <div id="user_header">Olá, <strong>Usuário(a)</strong></div>
   </div>
-  <div id="navbar">Espaço para menu</div>
-  <div id="container">
-    <div id="add-search">
-      <div id="new-service">
-        <button id="btn_new_service" onclick="showNewServiceForm()">Novo Serviço</button>
-        <button id="btn_export" onclick="exportData()">Exportar Registros</button>
+
+  <!-- Fim header -->
+
+  <!-- Início container e menu -->
+
+
+  <div id="navbar-container">
+    <div id="navbar">
+      <ul>
+        <li>Home</li>
+        <li>Sobre</li>
+      </ul>
+
+    </div>
+
+    <div id="container">
+      <div id="add-search">
+        <div id="new-service">
+          <button id="btn_new_service" onclick="showNewServiceForm()" title="Cadastrar novo serviço">NOVO</button>
+          <!-- <button id="btn_export" onclick="exportData()">Exportar</button> -->
+        </div>
+        <div id="search">
+          <form method="GET" action="">
+            {% csrf_token %}
+            <input type="search" id="inp_search" name="search" placeholder="Digite sua busca...">
+            <button id="btn_search" type="submit" hint="Buscar" title="Pesquisar serviço ou usuário">
+              <img id="img_search" src="{% static 'img/search-icon.png' %}">
+            </button>
+          </form>
+        </div>
       </div>
-      <div id="search">
-        <form method="GET" action="">
+      <div id="new-service-form" style="display: none;">
+        <form id="service-form">
           {% csrf_token %}
-          <input type="search" id="inp_search" name="search" placeholder="Digite sua busca...">
-          <button id="btn_search" type="submit">
-            <img id="img_search" src="{% static 'img/big-search-len.png' %}">
-          </button>
+          <label for="service_name">Nome do Serviço:</label>
+          <input type="text" id="service_name" name="service_name"><br><br>
+          <label for="user_name">Nome do Usuário:</label>
+          <input type="text" id="user_name" name="user_name"><br><br>
+          <label for="password">Senha:</label>
+          <input type="password" id="password" name="password" onclick="openPasswordGenerator('password')"><br><br>
+          <button type="button" onclick="saveService()">Salvar</button>
+          <button type="button" onclick="cancelNewService()">Cancelar</button>
         </form>
       </div>
-    </div>
-    <div id="new-service-form" style="display: none;">
-      <form id="service-form">
-        {% csrf_token %}
-        <label for="service_name">Nome do Serviço:</label>
-        <input type="text" id="service_name" name="service_name"><br><br>
-        <label for="user_name">Nome do Usuário:</label>
-        <input type="text" id="user_name" name="user_name"><br><br>
-        <label for="password">Senha:</label>
-        <input type="password" id="password" name="password" onclick="openPasswordGenerator('password')"><br><br>
-        <button type="button" onclick="saveService()">Salvar</button>
-        <button type="button" onclick="cancelNewService()">Cancelar</button>
-      </form>
-    </div>
-    <div id="list-services">
-      <table id="tb_services">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Data de criação</th>
-            <th>Última alteração</th>
-            <th>Nome do serviço</th>
-            <th>Nome do usuário</th>
-            <th>Senha</th>
-            <th>Ações</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for service in services %}
-          <tr id="row_{{ service.id }}" oncontextmenu="showContextMenu(event, '{{ service.id }}')">
-            <td>{{ service.id }}</td>
-            <td>{{ service.create_date|date:"Y-m-d H:i" }}</td>
-            <td id="update_date_{{ service.id }}">{{ service.update_date|date:"Y-m-d H:i" }}</td>
-            <td>
-              <span id="service_name_{{ service.id }}">{{ service.service_name }}</span>
-              <input class="edit_service_name" id="edit_service_name_{{ service.id }}" type="text" style="display: none;" value="{{ service.service_name }}">
-            </td>
-            <td>
-              <span id="user_name_{{ service.id }}">{{ service.user_name }}</span>
-              <input class="edit_user_name" id="edit_user_name_{{ service.id }}" type="text" style="display: none;" value="{{ service.user_name }}">
-            </td>
-            <td>
-              <span id="password_{{ service.id }}"> *************** </span>
-              <input class="edit_password" id="edit_password_{{ service.id }}" type="text" style="display: none;" value="{{ service.password }}" onclick="openPasswordGenerator('edit_password_{{ service.id }}')">
-            </td>
-            <td>
-              <button class="btn_toggle" id="toggle_psw_{{ service.id }}" onclick="togglePassword('{{ service.id }}')">Exibir</button>
-              <button class="btn_edit" id="edit_btn_{{ service.id }}" onclick="enableEdit('{{ service.id }}')">Editar</button>
-              <button class="btn_delete" id="delete_btn_{{ service.id }}" onclick="deleteService('{{ service.id }}')">Excluir</button>
-            </td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
+      <div id="list-services">
+        <table id="tb_services">
+          <thead>
+            <tr>
+              <th id ="id">ID</th>
+              <th>DATA DE CRIAÇÃO</th>
+              <th>ÚLTIMA ALTERAÇÃO</th>
+              <th>NOME DO SERVIÇO</th>
+              <th>NOME DO USUÁRIO</th>
+              <th>SENHA</th>
+              <th>AÇÕES</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for service in services %}
+            <tr id="row_{{ service.id }}" oncontextmenu="showContextMenu(event, '{{ service.id }}')">
+              <td>{{ service.id }}</td>
+              <td>{{ service.create_date|date:"Y-m-d H:i" }}</td>
+              <td id="update_date_{{ service.id }}">{{ service.update_date|date:"Y-m-d H:i" }}</td>
+              <td>
+                <span id="service_name_{{ service.id }}">{{ service.service_name }}</span>
+                <input class="edit_service_name" id="edit_service_name_{{ service.id }}" type="text"
+                  style="display: none;" value="{{ service.service_name }}">
+              </td>
+              <td>
+                <span id="user_name_{{ service.id }}">{{ service.user_name }}</span>
+                <input class="edit_user_name" id="edit_user_name_{{ service.id }}" type="text" style="display: none;"
+                  value="{{ service.user_name }}">
+              </td>
+              <td>
+                <span id="password_{{ service.id }}"> *************** </span>
+                <input class="edit_password" id="edit_password_{{ service.id }}" type="text" style="display: none;"
+                  value="{{ service.password }}" onclick="openPasswordGenerator('edit_password_{{ service.id }}')">
+              </td>
+              <td id="acoes">
+                  <button class="btn_toggle" title="Exibir senha" id="toggle_psw_{{ service.id }}" onclick="togglePassword('{{ service.id }}')">
+                    <img id="img_search_{{ service.id }}" src="{% static 'img/eye_opened.png' %}">
+                  </button>
+                  <button class="btn_edit" title="Editar registro" onclick="enableEdit('{{ service.id }}')">
+                    <img id="edit_btn_{{ service.id }}" src="{% static 'img/btn_edit.png' %}">
+                  </button>
+                  <button class="btn_delete" title="Excluir registro" onclick="deleteService('{{ service.id }}')">
+                    <img id="delete_btn" src="{% static 'img/btn_delete.png' %}">
+                  </button>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
-  <div id="footer">Desenvolvido pela Diretoria de Modernização e Inovação - DMI / 2024</div>
-  
+
+  <!-- Fim container e menu -->
+
+  <div id="footer"><p>Desenvolvido pela Diretoria de Modernização e Inovação - DMI / 2024</p></div>
+
   <div class="context-menu" id="context-menu">
     <ul>
       <li onclick="copyToClipboard('username')">Copiar nome do usuário</li>
@@ -112,7 +149,7 @@
           <input type="radio" id="upper" name="case" value="upper">
           <label for="upper">Upper Case</label>
         </div>
-        <br/>
+        <br />
         <div>
           <input type="checkbox" id="digits" name="digits" checked>
           <label for="digits">Pode conter dígitos</label><br>
@@ -130,7 +167,7 @@
           <label>caracteres</label>
         </div>
         <br>
-        <div id = "btn-password-generator">
+        <div id="btn-password-generator">
           <button type="button" id="generate-btn">Gerar</button>
           <button type="button" id="continue-btn">Continuar</button>
           <button type="button" id="cancel-btn">Cancelar</button>
@@ -149,19 +186,19 @@
     let currentContextType = null;
     let currentPasswordField = null;
 
-    document.addEventListener('click', function(event) {
+    document.addEventListener('click', function (event) {
       const contextMenu = document.getElementById('context-menu');
       contextMenu.style.display = 'none';
     });
 
     function enableEditContextMenu() {
-        const serviceId = currentServiceId; // Variável global definida em showContextMenu
-        enableEdit(serviceId);
+      const serviceId = currentServiceId; // Variável global definida em showContextMenu
+      enableEdit(serviceId);
     }
 
     function deleteServiceContextMenu() {
-        const serviceId = currentServiceId; // Variável global definida em showContextMenu
-        deleteService(serviceId);
+      const serviceId = currentServiceId; // Variável global definida em showContextMenu
+      deleteService(serviceId);
     }
 
     function showContextMenu(event, serviceId) {
@@ -207,12 +244,20 @@
       document.getElementById('edit_user_name_' + serviceId).style.display = 'inline';
       document.getElementById('password_' + serviceId).style.display = 'none';
       document.getElementById('edit_password_' + serviceId).style.display = 'inline';
-      document.getElementById('edit_btn_' + serviceId).textContent = 'Salvar';
-      document.getElementById('edit_btn_' + serviceId).style.backgroundColor = '#a6c88c';
-      document.getElementById('edit_btn_' + serviceId).style.color = '#324d1e';
-      document.getElementById('edit_btn_' + serviceId).onclick = function() { saveChanges(serviceId); };
+
+      //Alterar o botão de editar para o botão de salvar
+
+      const editButtonImg = document.getElementById('edit_btn_' + serviceId);
+      editButtonImg.src = "{% static 'img/btn_save.png' %}"; // Caminho para a imagem de salvar
+      editButtonImg.alt = "Salvar";
+
+      // document.getElementById('edit_btn_' + serviceId).textContent = 'Salvar';
+      // document.getElementById('edit_btn_' + serviceId).style.backgroundColor = '#a6c88c';
+      // document.getElementById('edit_btn_' + serviceId).style.color = '#324d1e';
+
+      document.getElementById('edit_btn_' + serviceId).onclick = function () { saveChanges(serviceId); };
       document.getElementById('delete_btn_' + serviceId).textContent = 'Cancelar';
-      document.getElementById('delete_btn_' + serviceId).onclick = function() { cancelEdit(serviceId); };
+      document.getElementById('delete_btn_' + serviceId).onclick = function () { cancelEdit(serviceId); };
       editingId = serviceId;
     }
 
@@ -224,9 +269,9 @@
       document.getElementById('password_' + serviceId).style.display = 'inline';
       document.getElementById('edit_password_' + serviceId).style.display = 'none';
       document.getElementById('edit_btn_' + serviceId).textContent = 'Editar';
-      document.getElementById('edit_btn_' + serviceId).onclick = function() { enableEdit(serviceId); };
+      document.getElementById('edit_btn_' + serviceId).onclick = function () { enableEdit(serviceId); };
       document.getElementById('delete_btn_' + serviceId).textContent = 'Excluir';
-      document.getElementById('delete_btn_' + serviceId).onclick = function() { deleteService(serviceId); };
+      document.getElementById('delete_btn_' + serviceId).onclick = function () { deleteService(serviceId); };
       document.getElementById('edit_btn_' + serviceId).style.backgroundColor = '#e3a56b';
       editingId = null;
     }
@@ -249,24 +294,24 @@
           'password': password,
         })
       })
-      .then(response => response.json())
-      .then(data => {
-        if (data.error) {
-          alert(data.error);
-        } else {
-          alert('Alterações salvas com sucesso.');
-          document.getElementById('service_name_' + serviceId).textContent = serviceName;
-          document.getElementById('user_name_' + serviceId).textContent = userName;
-          document.getElementById('password_' + serviceId).textContent = data.password;
-          document.getElementById('update_date_' + serviceId).textContent = data.update_date;
-          location.reload();
-          cancelEdit(serviceId);
-        }
-      })
-      .catch(error => {
-        console.error('Erro:', error);
-        alert('Erro ao salvar alterações.');
-      });
+        .then(response => response.json())
+        .then(data => {
+          if (data.error) {
+            alert(data.error);
+          } else {
+            alert('Alterações salvas com sucesso.');
+            document.getElementById('service_name_' + serviceId).textContent = serviceName;
+            document.getElementById('user_name_' + serviceId).textContent = userName;
+            document.getElementById('password_' + serviceId).textContent = data.password;
+            document.getElementById('update_date_' + serviceId).textContent = data.update_date;
+            location.reload();
+            cancelEdit(serviceId);
+          }
+        })
+        .catch(error => {
+          console.error('Erro:', error);
+          alert('Erro ao salvar alterações.');
+        });
     }
 
     function deleteService(serviceId) {
@@ -277,19 +322,19 @@
             'X-CSRFToken': '{{ csrf_token }}'
           }
         })
-        .then(response => response.json())
-        .then(data => {
-          if (data.success) {
-            alert(data.message);
-            document.getElementById('row_' + serviceId).remove();
-          } else {
-            alert(data.message);
-          }
-        })
-        .catch(error => {
-          console.error('Erro:', error);
-          alert('Erro ao excluir serviço.');
-        });
+          .then(response => response.json())
+          .then(data => {
+            if (data.success) {
+              alert(data.message);
+              document.getElementById('row_' + serviceId).remove();
+            } else {
+              alert(data.message);
+            }
+          })
+          .catch(error => {
+            console.error('Erro:', error);
+            alert('Erro ao excluir serviço.');
+          });
       }
     }
 
@@ -309,38 +354,52 @@
         method: 'POST',
         body: formData
       })
-      .then(response => response.json())
-      .then(data => {
-        if (data.error) {
-          alert(data.error);
-        } else {
-          location.reload();
-        }
-      })
-      .catch(error => {
-        console.error('Erro:', error);
-        alert('Erro ao salvar serviço.');
-      });
+        .then(response => response.json())
+        .then(data => {
+          if (data.error) {
+            alert(data.error);
+          } else {
+            location.reload();
+          }
+        })
+        .catch(error => {
+          console.error('Erro:', error);
+          alert('Erro ao salvar serviço.');
+        });
     }
 
+    // function togglePassword(serviceId) {
+    //   const passwordSpan = document.getElementById('password_' + serviceId);
+    //   const editPasswordInput = document.getElementById('edit_password_' + serviceId);
+    //   if (passwordSpan.textContent.trim() === '***************') {
+    //     passwordSpan.textContent = editPasswordInput.value;
+    //     document.getElementById('toggle_psw_' + serviceId).textContent = 'Ocultar';
+    //   } else {
+    //     passwordSpan.textContent = '***************';
+    //     document.getElementById('toggle_psw_' + serviceId).textContent = 'Exibir';
+    //   }
+    // }
+
     function togglePassword(serviceId) {
-      const passwordSpan = document.getElementById('password_' + serviceId);
-      const editPasswordInput = document.getElementById('edit_password_' + serviceId);
-      if (passwordSpan.textContent.trim() === '***************') {
-        passwordSpan.textContent = editPasswordInput.value;
-        document.getElementById('toggle_psw_' + serviceId).textContent = 'Ocultar';
-      } else {
-        passwordSpan.textContent = '***************';
-        document.getElementById('toggle_psw_' + serviceId).textContent = 'Exibir';
-      }
-    }
+            const passwordSpan = document.getElementById('password_' + serviceId);
+            const editPasswordInput = document.getElementById('edit_password_' + serviceId);
+            const toggleImage = document.getElementById('img_search_' + serviceId);
+
+            if (passwordSpan.textContent.trim() === '***************') {
+                passwordSpan.textContent = editPasswordInput.value;
+                toggleImage.src = "{% static 'img/eye_closed.png' %}";
+            } else {
+                passwordSpan.textContent = '***************';
+                toggleImage.src = "{% static 'img/eye_opened.png' %}";
+            }
+        }
 
     function openPasswordGenerator(passwordField) {
       currentPasswordField = passwordField;
       document.getElementById('password-generator').style.display = 'block';
     }
 
-    document.getElementById('generate-btn').addEventListener('click', function() {
+    document.getElementById('generate-btn').addEventListener('click', function () {
       const caseOption = document.querySelector('input[name="case"]:checked').value;
       const digits = document.getElementById('digits').checked;
       const symbols = document.getElementById('symbols').checked;
@@ -352,13 +411,13 @@
       document.getElementById('generated-password').value = generatedPassword;
     });
 
-    document.getElementById('continue-btn').addEventListener('click', function() {
+    document.getElementById('continue-btn').addEventListener('click', function () {
       const generatedPassword = document.getElementById('generated-password').value;
       document.getElementById(currentPasswordField).value = generatedPassword;
       document.getElementById('password-generator').style.display = 'none';
     });
 
-    document.getElementById('cancel-btn').addEventListener('click', function() {
+    document.getElementById('cancel-btn').addEventListener('click', function () {
       document.getElementById('password-generator').style.display = 'none';
     });
 
@@ -389,4 +448,5 @@
     }
   </script>
 </body>
+
 </html>
