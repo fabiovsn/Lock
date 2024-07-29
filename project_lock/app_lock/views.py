@@ -43,7 +43,6 @@ def decrypt_data(encrypted_data_base64):
         logger.error(f'Unexpected error during decryption: {e}')
         raise
 
-
 def home(request):
     if request.method == 'POST':
         form = CadastroForm(request.POST)
@@ -91,7 +90,6 @@ def home(request):
         form = CadastroForm()
         return render(request, 'services/home.html', {'services': decrypted_services, 'form': form})
 
-
 def save_changes(request):
     if request.method == 'POST':
         service_id = request.POST.get('service_id')
@@ -132,7 +130,6 @@ def save_changes(request):
     else:
         return JsonResponse({'error': 'Método não permitido.'})
 
-
 def delete_service(request, service_id):
     if request.method == 'POST':
         service = get_object_or_404(Service, id=service_id)
@@ -140,3 +137,18 @@ def delete_service(request, service_id):
         return JsonResponse({'success': True, 'message': 'Serviço excluído com sucesso.'})
     else:
         return JsonResponse({'success': False, 'message': 'Método não permitido.'})
+
+def reveal_password(request, service_id):
+    if request.method == 'POST':
+        service = get_object_or_404(Service, id=service_id)
+        try:
+            decrypted_password = decrypt_data(service.password)
+            return JsonResponse({'password': decrypted_password})
+        except InvalidToken:
+            logger.error(f'Erro ao descriptografar a senha do serviço {service.service_name}')
+            return JsonResponse({'error': 'Erro ao descriptografar a senha'}, status=500)
+        except Exception as e:
+            logger.error(f'Erro inesperado: {e}')
+            return JsonResponse({'error': 'Erro inesperado'}, status=500)
+    else:
+        return JsonResponse({'error': 'Método não permitido.'})

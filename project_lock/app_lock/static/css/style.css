@@ -1,8 +1,14 @@
-body {
+html, body {
   font-family: "Roboto", sans-serif;
   font-style: normal;
   display: flex;
   flex-direction: column;
+  margin: 0;
+  height: 100vh;
+}
+
+.content{
+  flex: 1;
 }
 
 /* HEADER */
@@ -43,7 +49,6 @@ body {
 #container {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
   width: 120rem;
   background-color: #f0f1fe;
@@ -55,6 +60,7 @@ body {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
+  height: 100%;
 }
 
 #navbar{
@@ -104,6 +110,7 @@ body {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   padding: 8px;
   background-color: #ffffff;
+  border-radius: 4px;
 }
 
 #tb_services {
@@ -142,7 +149,7 @@ tr:hover {
   background-color: #ced9fd;
 }
 
-.btn_toggle, .btn_edit, .btn_delete{
+.btn_toggle, .btn_edit, .btn_delete, .btn_save, .btn_cancel{
   border-style: none;
   background: none;
   vertical-align: middle;
@@ -155,20 +162,33 @@ tr:hover {
   cursor: pointer;
 }
 
+.btn_edit img, .btn_delete img, .btn_save img, .btn_cancel img {
+  display: block; /* Remove o espaço abaixo da imagem */
+  margin: 0; /* Remove margens adicionais */
+  padding: 0; /* Remove padding */
+  width: 24px; /* Defina um tamanho fixo */
+  height: 24px; /* Defina um tamanho fixo */
+}
+
+.btn_toggle img{
+  width: 26px; /* Defina um tamanho fixo */
+  height: 26px; /* Defina um tamanho fixo */
+}
+
+
 #acoes{
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
 }
 
-#acoes img{
+/* #acoes img{
   width: 1.6vw;
   height: 1.6vw;
-}
+} */
 
 #acoes img:hover{
-  width: 1.8vw;
-  height: 1.8vw;
+  opacity: 50%;
 }
 
 #btn_new_service{
