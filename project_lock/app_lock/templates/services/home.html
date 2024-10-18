@@ -20,7 +20,7 @@
   <div class="content">
     <div id="header">
       <div id="header_sub">
-        <img id="logo_header" src="{% static 'img/lock_logo_3.png' %}">
+        <img id="logo_header" src="{% static 'img/cadeado_logo.png' %}">
         <div id="name_header">LOCK</div>
       </div>
       <div id="user_header">Olá, <strong>Usuário(a)</strong></div>
@@ -42,10 +42,12 @@
 
       <div id="container">
         <div id="add-search">
+
           <div id="new-service">
             <button id="btn_new_service" onclick="showNewServiceForm()" title="Cadastrar novo serviço">NOVO</button>
             <!-- <button id="btn_export" onclick="exportData()">Exportar</button> -->
           </div>
+
           <div id="search">
             <form method="GET" action="">
               {% csrf_token %}
@@ -56,19 +58,38 @@
             </form>
           </div>
         </div>
-        <div id="new-service-form" style="display: none;">
+
+        <!-- Overlay and Modal Structure -->
+        <div id="modal-overlay-new-service" class="modal-overlay-new-service"></div>
+
+        <div id="new-service-modal" class="modal-new-service">
+          <p>Cadastrar serviço</p> <br>
+
           <form id="service-form">
             {% csrf_token %}
-            <label for="service_name">Nome do Serviço:</label>
-            <input type="text" id="service_name" name="service_name"><br><br>
-            <label for="user_name">Nome do Usuário:</label>
-            <input type="text" id="user_name" name="user_name"><br><br>
-            <label for="password">Senha:</label>
-            <input type="password" id="password" name="password" onclick="openPasswordGenerator('password')"><br><br>
-            <button type="button" onclick="saveService()">Salvar</button>
-            <button type="button" onclick="cancelNewService()">Cancelar</button>
+            
+            <table id = "table-modal-new-service">
+              <tr>
+                <td><label for="service_name">Nome do Serviço:</label></td>
+                <td><input type="text" id="service_name" name="service_name"></td>
+              </tr>
+              <tr>
+                <td><label for="user_name">Nome do Usuário:</label></td>
+                <td><input type="text" id="user_name" name="user_name"></td>
+              </tr>
+              <tr>
+                <td><label for="password">Senha:</label></td>
+                <td><input type="password" id="password" name="password" onclick="openPasswordGenerator('password')">
+                </td>
+              </tr>
+              <tr>
+                <td><button type="button" onclick="saveService()">Salvar</button></td>
+                <td><button type="button" onclick="cancelNewService()">Cancelar</button></td>
+              </tr>
+            </table>
           </form>
         </div>
+
         <div id="list-services">
           <table id="tb_services">
             <thead>
@@ -341,32 +362,32 @@
 
 
     function cancelEdit(serviceId) {
-  // Debug: Log para verificar se a função está sendo chamada
-  console.log("Cancel edit for serviceId:", serviceId);
+      // Debug: Log para verificar se a função está sendo chamada
+      console.log("Cancel edit for serviceId:", serviceId);
 
-  // Restaurar a exibição original dos campos
-  document.getElementById('service_name_' + serviceId).style.display = 'inline';
-  document.getElementById('edit_service_name_' + serviceId).style.display = 'none';
-  document.getElementById('user_name_' + serviceId).style.display = 'inline';
-  document.getElementById('edit_user_name_' + serviceId).style.display = 'none';
-  document.getElementById('password_' + serviceId).style.display = 'inline';
-  document.getElementById('edit_password_' + serviceId).style.display = 'none';
+      // Restaurar a exibição original dos campos
+      document.getElementById('service_name_' + serviceId).style.display = 'inline';
+      document.getElementById('edit_service_name_' + serviceId).style.display = 'none';
+      document.getElementById('user_name_' + serviceId).style.display = 'inline';
+      document.getElementById('edit_user_name_' + serviceId).style.display = 'none';
+      document.getElementById('password_' + serviceId).style.display = 'inline';
+      document.getElementById('edit_password_' + serviceId).style.display = 'none';
 
-  // Ocultar o botão de cancelar e mostrar o botão de editar
-  const editButton = document.querySelector('.btn_edit img[id="edit_btn_' + serviceId + '"]');
-  const saveButton = document.querySelector('.btn_save img[id="save_btn_' + serviceId + '"]');
-  if (editButton) editButton.parentElement.style.display = 'inline';
-  if (saveButton) saveButton.parentElement.style.display = 'none';
+      // Ocultar o botão de cancelar e mostrar o botão de editar
+      const editButton = document.querySelector('.btn_edit img[id="edit_btn_' + serviceId + '"]');
+      const saveButton = document.querySelector('.btn_save img[id="save_btn_' + serviceId + '"]');
+      if (editButton) editButton.parentElement.style.display = 'inline';
+      if (saveButton) saveButton.parentElement.style.display = 'none';
 
-  // Ocultar o botão de cancelar e mostrar o botão de deletar
-  const deleteButton = document.querySelector('.btn_delete img[id="delete_btn_' + serviceId + '"]');
-  const cancelButton = document.querySelector('.btn_cancel img[id="cancel_img_' + serviceId + '"]');
-  if (deleteButton) deleteButton.parentElement.style.display = 'inline';
-  if (cancelButton) cancelButton.parentElement.style.display = 'none';
+      // Ocultar o botão de cancelar e mostrar o botão de deletar
+      const deleteButton = document.querySelector('.btn_delete img[id="delete_btn_' + serviceId + '"]');
+      const cancelButton = document.querySelector('.btn_cancel img[id="cancel_img_' + serviceId + '"]');
+      if (deleteButton) deleteButton.parentElement.style.display = 'inline';
+      if (cancelButton) cancelButton.parentElement.style.display = 'none';
 
-  // Redefinir o ID de edição
-  editingId = null;
-}
+      // Redefinir o ID de edição
+      editingId = null;
+    }
 
 
 
@@ -437,13 +458,34 @@
       }
     }
 
-
     function showNewServiceForm() {
-      document.getElementById('new-service-form').style.display = 'block';
+      const modalOverlay = document.getElementById('modal-overlay-new-service');
+      const modal = document.getElementById('new-service-modal');
+
+      // Garantir que o display seja 'block' ao abrir
+      modalOverlay.style.display = 'block';
+      modal.style.display = 'block';
+
+      // Adiciona a classe 'active' para iniciar a transição
+      setTimeout(() => {
+        modalOverlay.classList.add('active');
+        modal.classList.add('active');
+      }, 10);  // Pequeno atraso para garantir que o display seja atualizado antes da animação
     }
 
     function cancelNewService() {
-      document.getElementById('new-service-form').style.display = 'none';
+      const modalOverlay = document.getElementById('modal-overlay-new-service');
+      const modal = document.getElementById('new-service-modal');
+
+      // Remove a classe 'active' para iniciar a transição de saída
+      modal.classList.remove('active');
+      modalOverlay.classList.remove('active');
+
+      // Após a transição (0.3s), defina o display como 'none' para ocultar completamente
+      setTimeout(() => {
+        modalOverlay.style.display = 'none';
+        modal.style.display = 'none';
+      }, 300);  // O tempo aqui deve corresponder à duração da transição (0.3s)
     }
 
     function saveService() {
@@ -467,6 +509,8 @@
           console.error('Erro:', error);
           alert('Erro ao salvar serviço.');
         });
+
+      cancelNewService();
     }
 
     // function togglePassword(serviceId) {

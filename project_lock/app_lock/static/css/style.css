@@ -22,16 +22,22 @@ html, body {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-#header_sub {
+#header_sub{
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  height: 4vw;
 }
 
 #logo_header{
-  width: 4vw;
+  width: 3.6vw;
   margin-left: 2vw;
+}
+
+#logo_header img{
+  width: auto;
+  height: 1vw;
 }
 
 #name_header{
@@ -138,14 +144,14 @@ html, body {
   height: 4vh;
 }
 
-tr:nth-child(even) {
+#tb_services tr:nth-child(even) {
   background-color: #e9eeff;
 }
-tr:nth-child(odd) {
+#tb_services tr:nth-child(odd) {
   background-color: #ffffff;
 }
 
-tr:hover {
+#tb_services tr:hover {
   background-color: #ced9fd;
 }
 
@@ -200,6 +206,7 @@ tr:hover {
   font-size: 14px;
   color: #ffffff;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
 }
 
 #btn_new_service:hover{
@@ -216,6 +223,7 @@ tr:hover {
   color: #ffffff;
   vertical-align: middle;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
 }
 
 #img_search{
@@ -237,6 +245,7 @@ tr:hover {
   border-style: none;
   font-size: 12px;
   color: #2e2e2e;
+  cursor: pointer;
 }
 
 #btn_export:hover{
@@ -348,12 +357,14 @@ tr:hover {
   border-style: none;
 }
 
+/* Modal do gerador de senhas */
+
 /* Password generator */
 
 #password-generator {
   display: none;
   position: fixed;
-  z-index: 1;
+  z-index: 1002;
   left: 0;
   top: 0;
   width: 100%;
@@ -415,12 +426,77 @@ tr:hover {
   background-color: #e29a9a;
 }
 
+/* Fim do modal do gerador de senhas */
 
-#new-service-form{
-  border-style: solid;
-  border-color: #2e2e2e;
-  border-width: 1px;
-  padding: 4px;
-  width: 115rem;
-  margin-top: 22px;
+
+/* Modal do novo serviço */
+
+.modal-overlay-new-service {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
 }
+
+/* Modal Window */
+
+.modal-new-service {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.8);
+  background-color: white;
+  z-index: 1001;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  height: auto;
+  max-height: 80%;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.modal-new-service.active {
+  display: block;
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.modal-overlay-new-service.active {
+  display: block;
+  opacity: 1;
+}
+
+.modal-new-service p{
+  background-color: #3f6deb;
+  color: #ffffff;
+  margin-top: 0;
+  padding: 5px;
+}
+
+#table-modal-new-service{
+  margin: 20px;
+  margin-top: 0;
+}
+
+#table-modal-new-service th{
+  background-color: #3f6deb;
+  width: 100%;
+  margin-bottom: 0;
+}
+
+#table-modal-new-service tr{
+
+}
+
+#table-modal-new-service td{
+  padding: 10px;
+ }
+
+/* Fim modal do novo serviço */
