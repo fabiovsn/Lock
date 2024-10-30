@@ -123,3 +123,17 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+#Backend padrão do Django para login
+
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',  # Backend padrão do Django
+)
+
+# Redirecionamento para a página de login quando não autenticado
+LOGIN_URL = 'login'
+
+SESSION_COOKIE_AGE = 3600  # 1 hora
+
+SESSION_SAVE_EVERY_REQUEST = True

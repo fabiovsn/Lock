@@ -1,88 +1,171 @@
-html, body {
+body, html{
   font-family: "Roboto", sans-serif;
   font-style: normal;
-  display: flex;
-  flex-direction: column;
+  background-color: #F2F3EE;
+  width: 100%;
+  height: 100%;
   margin: 0;
-  height: 100vh;
 }
 
+/* Login */
+
+.login{
+  
+  width: 100%;
+  height: 100%;
+}
+
+.wrapper{
+  background-color: #fff;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #dadada;
+  width: 24rem;
+  border-radius: 2px;
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  
+}
+
+.wrapper h1{
+  margin-top: 4rem;
+  margin-left: 2rem;
+  color: #504f4f;
+}
+
+.form-control, .btn_entrar_login{
+  width: 20rem;
+  height: 2.8rem;
+  border-radius: 4px;
+  margin-top: 0.8rem;
+  border-width: 1px;
+  margin-left: 2rem;
+  box-sizing: border-box;
+  font-size: 1.2rem;
+  border-color: #eee;
+  border-width: 1px;
+  color: #2c2c2c;
+}
+
+.form-control::placeholder{
+  color: #888;
+}
+
+.form-control:focus {
+  outline: none; /* Remove a borda padrão ao focar */
+  border-color: #7497f7; /* Borda azul ao focar */
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25); /* Adiciona um leve brilho azul ao focar */
+}
+
+.btn_entrar_login{
+  margin-top: 2.4rem;
+  margin-bottom: 2.4rem;
+  background-color: #7497f7;
+  color: #fff;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #4467c7;
+}
+
+.btn_entrar_login:hover{
+  background-color: #4467c7;
+}
+
+.wrapper p{
+  color: #b9b9b9;
+  margin-bottom: 2rem;
+  margin-left: 2rem;
+}
+
+/* Fim login */
+
+
 .content{
-  flex: 1;
+  width: 94%;
+  height: 86%;
+  background-color: #fff;
+  border-radius: 18px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 /* HEADER */
 
 #header {
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  background-color: #3f6deb;
+  background-color: #fff;
+  width: 100%;
+  height: 4rem;
   align-items: center;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-#header_sub{
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  height: 4vw;
+  border-radius: 18px 18px 0 0;
 }
 
 #logo_header{
-  width: 3.6vw;
-  margin-left: 2vw;
-}
-
-#logo_header img{
+  height: 3.6rem;
   width: auto;
-  height: 1vw;
+  margin-left: 2rem;
 }
 
 #name_header{
-  margin-left: 1vw;
-  color: #ffffff;
+  margin-left: 2rem;
+  font-size: 28px;
+  color: #ED654D
 }
 
 #user_header{
-  margin-right: 2vw;
-  color: #ffffff;
+  margin-left: 1.4rem;
+  color: #2c2c2c;
+}
+
+#logout_icon_header{
+  width: 1.6rem;
+  height: 1.6rem;
+  margin-left: 1.4rem;
+  cursor: pointer;
+}
+
+#logout_icon_header:hover{
+  transform: scale(0.94);
+}
+
+#notification_alert{
+  margin-left: 88rem;
+  width: 1.6rem;
+  height: 1.6rem;
+  cursor: pointer;
+}
+
+#notification_alert:hover{
+  transform: scale(0.94);
 }
 
 /* FIM HEADER */
-
-#container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 120rem;
-  background-color: #f0f1fe;
-}
 
 /* MENU */
 
 #navbar-container{
   display: flex;
-  flex-direction: row;
-  justify-content: space-around;
   height: 100%;
 }
 
 #navbar{
-  width: 22vw;
-  color: #2d2d2d;
+  width: 14rem;
+  color: #2c2c2c;
 }
 
 #navbar ul{
   padding: 0;
-  margin: 0;
-  margin-top: 32px;
+  margin-left: 2.4rem;
+  margin-top: 2.4rem;
 }
 
 #navbar li{
   list-style-type: none;
-  height: 4vh;
+  height: 2rem;
   padding: 8px;
   padding-left: 24px;
   display: flex;
@@ -91,11 +174,16 @@ html, body {
 }
 
 #navbar li:hover{
-  color: #6284f2;
-  background-color: #f0f1fe;
+  color: #ED654D;
+  background-color: #F2F3EE;
 }
 
 /* FIM MENU */
+
+#container {
+  background-color: #F2F3EE;
+  border-radius: 4px;
+}
 
 #add-search {
   margin-top: 4vh;
@@ -105,9 +193,8 @@ html, body {
   justify-content: space-between;
 }
 
-#new-service,
-#search {
-  margin: 0;
+#new-service{
+  display: flex;
 }
 
 #list-services {
@@ -132,6 +219,7 @@ html, body {
   font-style: normal;
   font-size: 14px;
   width: 28vw;
+  text-align: center;
 }
 
 #tb_services #id{
@@ -197,59 +285,39 @@ html, body {
   opacity: 50%;
 }
 
-#btn_new_service{
-  width: 7vw;
-  height: 5vh;
-  background-color: #6284f2;
+#btn_new_service, #btn_export{
+  width: 8rem;
+  height: 2.8rem;
+  background-color: #fff;
   border-radius: 4px;
   border-style: none;
-  font-size: 14px;
-  color: #ffffff;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  font-size: 1rem;
+  color: #2c2c2c;
   cursor: pointer;
+  margin-left: 2.4rem;
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
 }
 
 #btn_new_service:hover{
-  background-color: #6284f2;
-  opacity: 80%;
+  transform: scale(0.94);
 }
 
-#btn_search{
-  width: 6vw;
-  height: 4vh;
-  background-color: #6284f2;
-  border-style: none;
-  border-radius: 4px;
-  color: #ffffff;
-  vertical-align: middle;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  cursor: pointer;
+#btn_export:hover{
+  transform: scale(0.94);
+}
+
+#btn_add_img, #btn_export_img{
+  width: 1.6rem;
+  height: 1.6rem;
 }
 
 #img_search{
   width: 20px;
   height: 20px;
   vertical-align: middle;
-}
-
-#btn_search:hover{
-  opacity: 90%;
-}
-
-#btn_export{
-  margin-left: 4rem;
-  width: 12rem;
-  height: 3rem;
-  background-color: #acacac;
-  border-radius: 4px;
-  border-style: none;
-  font-size: 12px;
-  color: #2e2e2e;
-  cursor: pointer;
-}
-
-#btn_export:hover{
-  background-color: #dad7d7;
 }
 
 #inp_search{
@@ -500,3 +568,28 @@ html, body {
  }
 
 /* Fim modal do novo serviço */
+
+/* Início DataTables */
+
+.custom-search {
+  width: 400px;           /* Define a largura */
+  border: 2px solid #ccc; /* Borda personalizada */
+  border-radius: 5px;     /* Bordas arredondadas */
+  font-size: 16px;        /* Tamanho da fonte */
+}
+
+/* Estilo para o container do campo de pesquisa */
+.dataTables_filter {
+  margin-top: 20px;    /* Espaçamento superior */
+  margin-bottom: 20px;    /* Espaçamento inferior */
+}
+
+.dataTables_length {
+  margin-top: 20px;  /* Define a margem superior */
+}
+
+.dataTables_paginate {
+  margin-top: 10px;  /* Adiciona margem superior */
+}
+
+/* Fim DataTables */

@@ -9,6 +9,12 @@ from cryptography.fernet import Fernet, InvalidToken
 import logging
 import base64
 from django.db.models import Q
+from django.shortcuts import render, redirect
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
+import csv
+from django.http import HttpResponse
+import pytz
 
 # Configure logging
 logging.basicConfig(level=logging.DEBUG)
@@ -43,6 +49,7 @@ def decrypt_data(encrypted_data_base64):
         logger.error(f'Unexpected error during decryption: {e}')
         raise
 
+@login_required  # Garante que só usuários logados podem acessar a home
 def home(request):
     if request.method == 'POST':
         form = CadastroForm(request.POST)
@@ -86,9 +93,13 @@ def home(request):
                 logger.error(f'Erro ao descriptografar a senha do serviço {service.service_name}')
                 decrypted_service['password'] = 'Erro ao descriptografar'
             decrypted_services.append(decrypted_service)
-        
+
         form = CadastroForm()
-        return render(request, 'services/home.html', {'services': decrypted_services, 'form': form})
+        return render(request, 'services/home.html', {
+            'services': decrypted_services,
+            'form': form,
+            'user_name': request.user.username  # Passa o nome do usuário para o template
+        })
 
 def save_changes(request):
     if request.method == 'POST':
@@ -152,3 +163,65 @@ def reveal_password(request, service_id):
             return JsonResponse({'error': 'Erro inesperado'}, status=500)
     else:
         return JsonResponse({'error': 'Método não permitido.'})
+    
+
+# Login
+
+
+def login_view(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(request, username=username, password=password)
+        
+        if user is not None:
+            login(request, user)
+            return redirect('home')  # Redireciona para a página home
+        else:
+            return render(request, 'services/login.html', {'error': 'Usuário ou senha incorretos'})
+    return render(request, 'services/login.html')
+
+# @login_required  # Garante que só usuários logados podem acessar a home
+# def home_view(request):
+#     return render(request, 'services/home.html', {'user_name': request.user.username})
+
+def logout_view(request):
+    logout(request)  # Faz o logout do usuário
+    return redirect('login')  # Redireciona para a página de login
+
+def export_csv(request):
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="export_data.csv"'
+    
+    writer = csv.writer(response)
+    writer.writerow(['Id', 'Data de Criacao', 'Ultima Alteracao', 'Nome do Servico', 'Nome do Usuario', 'Senha'])  # Cabeçalhos das colunas
+
+    # Defina o fuso horário local que você deseja usar
+    local_tz = pytz.timezone('America/Sao_Paulo')  # Ajuste conforme necessário
+
+    for item in Service.objects.all():
+        # Converta as datas para o fuso horário local
+        create_date = item.create_date  # Data conforme está no banco de dados
+        update_date = item.update_date
+        
+        # Converta as datas para o fuso horário local
+        if create_date:
+            create_date_local = create_date.astimezone(local_tz).strftime('%Y-%m-%d %H:%M:%S')
+        else:
+            create_date_local = ''
+        
+        if update_date:
+            update_date_local = update_date.astimezone(local_tz).strftime('%Y-%m-%d %H:%M:%S')
+        else:
+            update_date_local = ''
+
+        writer.writerow([
+            item.id,
+            create_date_local,
+            update_date_local,
+            item.service_name,
+            item.user_name,
+            decrypt_data(item.password)
+        ])  # Dados dos itens
+
+    return response

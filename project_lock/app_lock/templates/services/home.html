@@ -11,25 +11,34 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
     rel="stylesheet">
+  <!-- DataTables CSS -->
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+
+  <!-- DataTables JS -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+
   <title>Lock - Gerenciador de senhas</title>
 </head>
 
 <body>
 
-  <!-- Header -->
+
   <div class="content">
+
+    <!-- Header -->
+
     <div id="header">
-      <div id="header_sub">
-        <img id="logo_header" src="{% static 'img/cadeado_logo.png' %}">
-        <div id="name_header">LOCK</div>
+      <!-- <img id="logo_header" src="{% static 'img/cadeado_logo.png' %}"> -->
+      <p id="name_header">LOCKER</p>
+      <img id="notification_alert" src="{% static 'img/packard-bell.png' %}">
+      <div id="user_header">Olá, <strong>{{ user_name }}</div>
+      <div id="logout" onclick="window.location.href={% url 'logout' %}" title="Sair">
+        <img id="logout_icon_header" src="{% static 'img/logout_icon.png' %}">
       </div>
-      <div id="user_header">Olá, <strong>Usuário(a)</strong></div>
     </div>
 
     <!-- Fim header -->
-
-    <!-- Início container e menu -->
-
 
     <div id="navbar-container">
       <div id="navbar">
@@ -37,18 +46,26 @@
           <li>Home</li>
           <li>Sobre</li>
         </ul>
-
       </div>
 
       <div id="container">
         <div id="add-search">
 
           <div id="new-service">
-            <button id="btn_new_service" onclick="showNewServiceForm()" title="Cadastrar novo serviço">NOVO</button>
-            <!-- <button id="btn_export" onclick="exportData()">Exportar</button> -->
+            
+            <div id="btn_new_service" onclick="showNewServiceForm()" title="Cadastrar novo serviço">
+              <img id="btn_add_img" src="{% static 'img/btn_add.png' %}">
+              Novo
+            </div>
+
+            <div id="btn_export" onclick="exportData()">
+              <img id="btn_export_img" src="{% static 'img/btn_export.png' %}">
+              Exportar
+            </div>
+
           </div>
 
-          <div id="search">
+          <!-- <div id="search">
             <form method="GET" action="">
               {% csrf_token %}
               <input type="search" id="inp_search" name="search" placeholder="Digite sua busca...">
@@ -56,7 +73,7 @@
                 <img id="img_search" src="{% static 'img/search-icon.png' %}">
               </button>
             </form>
-          </div>
+          </div> -->
         </div>
 
         <!-- Overlay and Modal Structure -->
@@ -67,8 +84,8 @@
 
           <form id="service-form">
             {% csrf_token %}
-            
-            <table id = "table-modal-new-service">
+
+            <table id="table-modal-new-service">
               <tr>
                 <td><label for="service_name">Nome do Serviço:</label></td>
                 <td><input type="text" id="service_name" name="service_name"></td>
@@ -161,67 +178,72 @@
         </div>
       </div>
     </div>
+
+    <!-- <div id="footer">
+      <p>Desenvolvido pela Diretoria de Modernização e Inovação - DMI / 2024</p>
+    </div> -->
+
+    <div class="context-menu" id="context-menu">
+      <ul>
+        <li onclick="copyToClipboard('username')">Copiar nome do usuário</li>
+        <li onclick="copyToClipboard('password')">Copiar senha</li>
+        <hr>
+        <li onclick="enableEditContextMenu()">Editar</li>
+        <li onclick="deleteServiceContextMenu()">Excluir</li>
+      </ul>
+    </div>
+
+    <div id="password-generator" class="modal">
+      <div class="modal-content">
+        <h2>Gerador de Senhas</h2>
+        <form id="generator-form">
+          <div>
+            <label>Essa senha deve conter:</label><br><br>
+            <input type="radio" id="mixed" name="case" value="mixed" checked>
+            <label for="mixed">Mixed Case</label><br>
+            <input type="radio" id="lower" name="case" value="lower">
+            <label for="lower">Lower Case</label><br>
+            <input type="radio" id="upper" name="case" value="upper">
+            <label for="upper">Upper Case</label>
+          </div>
+          <br />
+          <div>
+            <input type="checkbox" id="digits" name="digits" checked>
+            <label for="digits">Pode conter dígitos</label><br>
+            <input type="checkbox" id="symbols" name="symbols" checked>
+            <label for="symbols">Pode conter símbolos</label><br>
+            <input type="checkbox" id="start-char" name="start-char" checked>
+            <label for="start-char">Deve começar com um caracter</label>
+          </div>
+          <br>
+          <div>
+            <label>Deve conter entre</label>
+            <input type="number" id="min-length" name="min-length" min="4" max="20" value="8">
+            <label>e</label>
+            <input type="number" id="max-length" name="max-length" min="4" max="20" value="12">
+            <label>caracteres</label>
+          </div>
+          <br>
+          <div id="btn-password-generator">
+            <button type="button" id="generate-btn">Gerar</button>
+            <button type="button" id="continue-btn">Continuar</button>
+            <button type="button" id="cancel-btn">Cancelar</button>
+          </div>
+          <div>
+            <br>
+            <label for="generated-password">Senha gerada:</label>
+            <input type="text" id="generated-password">
+          </div>
+        </form>
+      </div>
+    </div>
+
+
+
   </div>
   <!-- Fim container e menu -->
 
-  <div id="footer">
-    <p>Desenvolvido pela Diretoria de Modernização e Inovação - DMI / 2024</p>
-  </div>
 
-  <div class="context-menu" id="context-menu">
-    <ul>
-      <li onclick="copyToClipboard('username')">Copiar nome do usuário</li>
-      <li onclick="copyToClipboard('password')">Copiar senha</li>
-      <hr>
-      <li onclick="enableEditContextMenu()">Editar</li>
-      <li onclick="deleteServiceContextMenu()">Excluir</li>
-    </ul>
-  </div>
-
-  <div id="password-generator" class="modal">
-    <div class="modal-content">
-      <h2>Gerador de Senhas</h2>
-      <form id="generator-form">
-        <div>
-          <label>Essa senha deve conter:</label><br><br>
-          <input type="radio" id="mixed" name="case" value="mixed" checked>
-          <label for="mixed">Mixed Case</label><br>
-          <input type="radio" id="lower" name="case" value="lower">
-          <label for="lower">Lower Case</label><br>
-          <input type="radio" id="upper" name="case" value="upper">
-          <label for="upper">Upper Case</label>
-        </div>
-        <br />
-        <div>
-          <input type="checkbox" id="digits" name="digits" checked>
-          <label for="digits">Pode conter dígitos</label><br>
-          <input type="checkbox" id="symbols" name="symbols" checked>
-          <label for="symbols">Pode conter símbolos</label><br>
-          <input type="checkbox" id="start-char" name="start-char" checked>
-          <label for="start-char">Deve começar com um caracter</label>
-        </div>
-        <br>
-        <div>
-          <label>Deve conter entre</label>
-          <input type="number" id="min-length" name="min-length" min="4" max="20" value="8">
-          <label>e</label>
-          <input type="number" id="max-length" name="max-length" min="4" max="20" value="12">
-          <label>caracteres</label>
-        </div>
-        <br>
-        <div id="btn-password-generator">
-          <button type="button" id="generate-btn">Gerar</button>
-          <button type="button" id="continue-btn">Continuar</button>
-          <button type="button" id="cancel-btn">Cancelar</button>
-        </div>
-        <div>
-          <br>
-          <label for="generated-password">Senha gerada:</label>
-          <input type="text" id="generated-password">
-        </div>
-      </form>
-    </div>
-  </div>
 
   <script>
     let currentServiceId = null;
@@ -513,89 +535,6 @@
       cancelNewService();
     }
 
-    // function togglePassword(serviceId) {
-    //   const passwordSpan = document.getElementById('password_' + serviceId);
-    //   const editPasswordInput = document.getElementById('edit_password_' + serviceId);
-    //   if (passwordSpan.textContent.trim() === '***************') {
-    //     passwordSpan.textContent = editPasswordInput.value;
-    //     document.getElementById('toggle_psw_' + serviceId).textContent = 'Ocultar';
-    //   } else {
-    //     passwordSpan.textContent = '***************';
-    //     document.getElementById('toggle_psw_' + serviceId).textContent = 'Exibir';
-    //   }
-    // }
-
-    // function togglePassword(serviceId) {
-    //   const passwordSpan = document.getElementById('password_' + serviceId);
-    //   const editPasswordInput = document.getElementById('edit_password_' + serviceId);
-    //   const toggleImage = document.getElementById('img_search_' + serviceId);
-
-    //   if (passwordSpan.textContent.trim() === '***************') {
-    //     passwordSpan.textContent = editPasswordInput.value;
-    //     toggleImage.src = "{% static 'img/eye_closed.png' %}";
-    //   } else {
-    //     passwordSpan.textContent = '***************';
-    //     toggleImage.src = "{% static 'img/eye_opened.png' %}";
-    //   }
-    // }
-
-    // function togglePassword(serviceId) {
-    //   const passwordField = document.getElementById(`password_${serviceId}`);
-    //   const passwordInput = document.getElementById(`edit_password_${serviceId}`);
-    //   const img = document.getElementById(`img_search_${serviceId}`);
-    //   if (passwordField.style.display === 'none') {
-    //     passwordField.style.display = 'inline';
-    //     passwordInput.style.display = 'none';
-    //     img.src = "{% static 'img/eye_opened.png' %}";
-    //   } else {
-    //     passwordField.style.display = 'none';
-    //     passwordInput.style.display = 'inline';
-    //     img.src = "{% static 'img/eye_closed.png' %}";
-    //   }
-    // }
-
-    // function togglePassword(serviceId) {
-    //   const passwordSpan = document.getElementById('password_' + serviceId);
-    //   const passwordInput = document.getElementById('password_input_' + serviceId);
-    //   const toggleButton = document.getElementById('toggle_psw_' + serviceId);
-
-    //   // Verifica se a senha está oculta
-    //   if (passwordSpan.style.display === 'none') {
-    //     // Mostra a senha
-    //     passwordSpan.style.display = 'inline';
-    //     passwordInput.style.display = 'none';
-    //     toggleButton.textContent = 'Ocultar Senha';
-    //   } else {
-    //     // Oculta a senha
-    //     passwordSpan.style.display = 'none';
-    //     passwordInput.style.display = 'inline';
-
-    //     // Faz uma requisição AJAX para buscar a senha descriptografada
-    //     fetch('/reveal_password/' + serviceId + '/', {
-    //       method: 'POST',
-    //       headers: {
-    //         'Content-Type': 'application/x-www-form-urlencoded',
-    //         'X-CSRFToken': '{{ csrf_token }}'
-    //       }
-    //     })
-    //       .then(response => response.json())
-    //       .then(data => {
-    //         if (data.password) {
-    //           // Preenche o campo de senha com o valor recebido
-    //           passwordInput.value = data.password;
-    //           toggleButton.textContent = 'Mostrar Senha';
-    //         } else {
-    //           alert('Erro ao recuperar a senha');
-    //         }
-    //       })
-    //       .catch(error => {
-    //         console.error('Erro:', error);
-    //         alert('Erro ao recuperar a senha.');
-    //       });
-    //   }
-    // }
-
-
     function revealPassword(serviceId) {
       const toggleButton = document.getElementById('toggle_psw_' + serviceId);
       const passwordSpan = document.getElementById('password_' + serviceId);
@@ -681,7 +620,35 @@
 
       return password;
     }
+
+    $(document).ready(function () {
+      $('#tb_services').DataTable({
+        "language": {
+          "url": "https://cdn.datatables.net/plug-ins/1.13.4/i18n/pt-BR.json"
+        },
+        "paging": true,
+        "searching": true,
+        "ordering": true,
+        "info": true,
+        "pageLength": 10,
+        "dom": '<"top"f>rt<"bottom"lp><"clear">',  // f = search input, l = length, p = pagination
+        "initComplete": function () {
+          // Adicionar classe ao input de pesquisa
+          $('div.dataTables_filter input').addClass('custom-search');
+        },
+        "columnDefs": [
+          { "orderable": false, "targets": [5, 6] }  // Coluna de Senha (índice 5) e Ações (índice 6)
+        ]
+      });
+    });
+
+    function exportData() {
+      // Faz uma requisição GET para a URL que irá gerar o CSV
+      window.location.href = "{% url 'export_csv' %}";
+    }
+
   </script>
+
 </body>
 
 </html>
