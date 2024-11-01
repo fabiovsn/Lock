@@ -7,7 +7,7 @@ body, html{
   margin: 0;
 }
 
-/* Login */
+/* LOGIN */
 
 .login{
   
@@ -79,7 +79,7 @@ body, html{
   margin-left: 2rem;
 }
 
-/* Fim login */
+/* FIM LOGIN */
 
 
 .content{
@@ -129,7 +129,7 @@ body, html{
 }
 
 #logout_icon_header:hover{
-  transform: scale(0.94);
+  transform: scale(0.92);
 }
 
 #notification_alert{
@@ -140,7 +140,7 @@ body, html{
 }
 
 #notification_alert:hover{
-  transform: scale(0.94);
+  transform: scale(0.92);
 }
 
 /* FIM HEADER */
@@ -185,104 +185,11 @@ body, html{
   border-radius: 4px;
 }
 
-#add-search {
-  margin-top: 4vh;
-  width: 80vw;
-  align-items: center;
+/* BOTÕES NOVO E EXPORTAR */
+
+#new_service_export {
+  margin-top: 2.4rem;
   display: flex;
-  justify-content: space-between;
-}
-
-#new-service{
-  display: flex;
-}
-
-#list-services {
-  margin: 4vh;
-  margin-top: 8vh;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  padding: 8px;
-  background-color: #ffffff;
-  border-radius: 4px;
-}
-
-#tb_services {
-  text-align: center;
-}
-
-#tb_services th{
-  background-color: #6284f2;
-  height: 2rem;
-  color:#ffffff;
-  font-family: "Roboto", sans-serif;
-  font-weight: 400;
-  font-style: normal;
-  font-size: 14px;
-  width: 28vw;
-  text-align: center;
-}
-
-#tb_services #id{
-  width: 4vw;
-}
-
-#tb_services td{
-  font-size: 14px;
-  color: #2d2d2d;
-  height: 4vh;
-}
-
-#tb_services tr:nth-child(even) {
-  background-color: #e9eeff;
-}
-#tb_services tr:nth-child(odd) {
-  background-color: #ffffff;
-}
-
-#tb_services tr:hover {
-  background-color: #ced9fd;
-}
-
-.btn_toggle, .btn_edit, .btn_delete, .btn_save, .btn_cancel{
-  border-style: none;
-  background: none;
-  vertical-align: middle;
-  align-items: center;
-  padding: 0; /* Remove o padding */
-  margin: 0; /* Remove a margem */
-  display: inline-flex; /* Alinha o conteúdo do botão */
-  align-items: center; /* Alinha verticalmente o conteúdo */
-  justify-content: center; /* Alinha horizontalmente o conteúdo */
-  cursor: pointer;
-}
-
-.btn_edit img, .btn_delete img, .btn_save img, .btn_cancel img {
-  display: block; /* Remove o espaço abaixo da imagem */
-  margin: 0; /* Remove margens adicionais */
-  padding: 0; /* Remove padding */
-  width: 24px; /* Defina um tamanho fixo */
-  height: 24px; /* Defina um tamanho fixo */
-}
-
-.btn_toggle img{
-  width: 26px; /* Defina um tamanho fixo */
-  height: 26px; /* Defina um tamanho fixo */
-}
-
-
-#acoes{
-  display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
-}
-
-/* #acoes img{
-  width: 1.6vw;
-  height: 1.6vw;
-} */
-
-#acoes img:hover{
-  opacity: 50%;
 }
 
 #btn_new_service, #btn_export{
@@ -301,12 +208,17 @@ body, html{
   align-items: center;
 }
 
+#btn_new_service{
+  background-color: #638cd3;
+  color: #fff;
+}
+
 #btn_new_service:hover{
-  transform: scale(0.94);
+  transform: scale(0.92);
 }
 
 #btn_export:hover{
-  transform: scale(0.94);
+  transform: scale(0.92);
 }
 
 #btn_add_img, #btn_export_img{
@@ -314,25 +226,87 @@ body, html{
   height: 1.6rem;
 }
 
-#img_search{
-  width: 20px;
-  height: 20px;
-  vertical-align: middle;
-}
+/* FIM BOTÕES NOVO E EXPORTAR */
 
-#inp_search{
-  width: 24vw;
-  height: 4vh;
-  border-color: #6284f2;
+/* FIM CONTAINER */
+
+/* TABELA DE SERVIÇOS */
+
+#list-services {
+  margin-left: 2.4rem;
+  margin-top: 4rem;
+  padding: 2rem;
+  background-color: #ffffff;
   border-radius: 4px;
-  outline: none;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-#inp_search:focus{
-  border-color: #6284f2;
+#tb_services {
+  text-align: center;
 }
 
+#tb_services th{
+  height: 2rem;
+  color:#2c2c2c;
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
+  font-style: normal;
+  font-size: 16px;
+  width: 24rem;
+  text-align: center;
+}
+
+#tb_services #id{
+  width: 4rem;
+}
+
+#tb_services td{
+  font-size: 14px;
+  color: #2d2d2d;
+  height: 2.4rem;
+  font-weight: 400;
+  font-style: normal;
+}
+
+#tb_services tr:nth-child(even) {
+  background-color: #f2fdf9;
+}
+#tb_services tr:nth-child(odd) {
+  background-color: #ffffff;
+}
+
+#tb_services tr:hover {
+  background-color: #E0F1EB;
+}
+
+/* FIM TABELA DE SERVIÇOS */
+
+/* BOTOES TABELA DE SERVICOS */
+
+#acoes{
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  margin: 0;
+}
+
+.btn_toggle, .btn_edit, .btn_delete, .btn_save, .btn_cancel{
+  border-style: none;
+  background: none;
+  cursor: pointer;
+}
+
+#acoes img{
+  width: 1.6rem;
+  height: 1.6rem;
+}
+
+#acoes img:hover{
+  transform: scale(0.92);
+}
+
+/* FIM BOTOES TABELA DE SERVICOS */
+
+/* INÍCIO FOOTER */
 
 #footer {
   height: 4vw;
@@ -346,30 +320,7 @@ body, html{
   margin-left: 2vw;
 }
 
-
-#service-form {
-  display: flex;
-  flex-direction: row;
-}
-
-#service-form label {
-  margin-right: 10px;
-  /* Espaçamento entre o rótulo e o campo */
-}
-
-/* Estilos adicionais para os campos de entrada */
-#service-form input[type="text"],
-#service-form input[type="password"],
-#service-form input[type="email"] {
-  width: 200px;
-  /* Largura dos campos de entrada */
-}
-
-#service-form button {
-  margin-left: 10px;
-  /* Espaçamento entre o campo de entrada e o botão */
-}
-
+/* FIM FOOTER */
 
 .context-menu {
   position: absolute;
@@ -433,75 +384,81 @@ body, html{
   display: none;
   position: fixed;
   z-index: 1002;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  height: auto;
+  width: 32rem;
+  border-radius: 4px;
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  box-sizing: border-box; /* Garante que o padding não afete a largura total */
+  font-size: 1rem;
+  font-weight: 300;
+  background-color: #fff;
 }
 
 .modal-content {
-  background-color: #fff;
-  margin: 15% auto;
-  padding: 20px;
-  border: 1px solid #888;
-  box-shadow: 6px 6px 1px 1px #888;
-  width: 80%;
-  max-width: 500px;
-  border-radius: 10px;
-  font-size: 12px;
+  width: 100%;
+  height: 100%;
+  margin: 2rem 0 2.8rem 2rem;
 }
 
 #btn-password-generator{
   display: flex;
-  flex-direction: row;
+  width: 100%;
+  align-items: center;
   justify-content: space-evenly;
+  margin-bottom: 2rem;
 }
 
-#generate-btn, #continue-btn, #cancel-btn{
-  width: 6rem;
-  height: 2rem;
-  margin: 1px;
+#btn-password-generator button{
+  width: 8rem;
+  height: 2.8rem;
+  
   border-radius: 4px;
   border-style: none;
+  font-size: 1rem;
+  color: #2c2c2c;
+  cursor: pointer;
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
 }
 
-
 #generate-btn{
-  background-color: #71b7e6;
-  color: #154b6e;
+  background-color: #b1c8ec;
 }
 
 #continue-btn{
-  background-color: #a6c88c;
-  color: #324d1e;
+  background-color: #b1ecd8;
 }
 
 #cancel-btn{
-  background-color: #e36b6b;
-  color: #691f1f;
+  background-color: #eaebea;
 }
 
-#generate-btn:hover{
-  background-color: #afd2e9;
+#generate-btn:hover, #cancel-btn:hover, #continue-btn:hover{
+  transform: scale(0.92);
 }
 
-#continue-btn:hover{
-  background-color: #cbd6c2;
+#label-generated-password{
+  margin-left: 2rem;
 }
 
-#cancel-btn:hover{
-  background-color: #e29a9a;
+#generated-password{
+  width: 20rem;
+  height: 1.6rem;
+  font-size: 1.2rem;
+  margin-bottom: 4rem;
+  border-radius: 4px;
 }
 
 /* Fim do modal do gerador de senhas */
 
 
-/* Modal do novo serviço */
+/* MODAL DO NOVO SERVIÇO */
 
 .modal-overlay-new-service {
   display: none;
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
@@ -514,20 +471,50 @@ body, html{
 
 /* Modal Window */
 
+.title-modal{
+  background-color: #F2F3EE;
+  border-radius: 4px 4px 0 0;
+  padding: 0.8rem;
+  font-weight: 400;
+  font-size: 1.2rem;
+  color: #2c2c2c;
+}
+
+.form-modal{
+  margin-top: 2.8rem;
+}
+
+.label{
+  margin-bottom: 3.4rem;
+  font-weight: 400;
+  margin-left: 2rem;
+  box-sizing: border-box; /* Garante que o padding não afete a largura total */
+}
+
+.form-modal input{
+  width: 20rem;
+  height: 1.8rem;
+  border-radius: 4px;
+  font-size: 16px;
+  border-width: 1px;
+  margin-left: 2rem;
+  box-sizing: border-box; /* Garante que o padding não afete a largura total */
+}
+
 .modal-new-service {
   display: none;
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%) scale(0.8);
-  background-color: white;
+  background-color: #fff;
   z-index: 1001;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   border-radius: 4px;
-  height: auto;
-  max-height: 80%;
+  height: 28rem;
+  width: 24rem;
   opacity: 0;
   transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+  font-size: 1rem;
 }
 
 .modal-new-service.active {
@@ -541,33 +528,36 @@ body, html{
   opacity: 1;
 }
 
-.modal-new-service p{
-  background-color: #3f6deb;
-  color: #ffffff;
-  margin-top: 0;
-  padding: 5px;
-}
-
-#table-modal-new-service{
-  margin: 20px;
-  margin-top: 0;
-}
-
-#table-modal-new-service th{
-  background-color: #3f6deb;
+#btn-modal-new-service{
+  display: flex;
+  margin-top: 3.6rem;
   width: 100%;
-  margin-bottom: 0;
+  align-items: center;
+  justify-content: space-evenly;
 }
 
-#table-modal-new-service tr{
-
+#btn-modal-new-service button{
+  width: 8rem;
+  height: 2.8rem;
+  background-color: #b1ecd8;
+  border-radius: 4px;
+  border-style: none;
+  font-size: 1rem;
+  color: #2c2c2c;
+  cursor: pointer;
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
 }
 
-#table-modal-new-service td{
-  padding: 10px;
- }
+#btn-modal-new-service .cancelar{
+  background-color: #eaebea;
+}
 
-/* Fim modal do novo serviço */
+#btn-modal-new-service button:hover{
+  transform: scale(0.92);
+}
+
+
+/* FIM MODAL DO NOVO SERVIÇO */
 
 /* Início DataTables */
 
@@ -576,6 +566,8 @@ body, html{
   border: 2px solid #ccc; /* Borda personalizada */
   border-radius: 5px;     /* Bordas arredondadas */
   font-size: 16px;        /* Tamanho da fonte */
+  padding-left: 2rem !important; /* Força o padding à esquerda */
+  box-sizing: border-box; /* Garante que o padding não afete a largura total */
 }
 
 /* Estilo para o container do campo de pesquisa */
@@ -586,6 +578,7 @@ body, html{
 
 .dataTables_length {
   margin-top: 20px;  /* Define a margem superior */
+  font-weight: normal;
 }
 
 .dataTables_paginate {

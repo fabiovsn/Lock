@@ -33,7 +33,8 @@
       <p id="name_header">LOCKER</p>
       <img id="notification_alert" src="{% static 'img/packard-bell.png' %}">
       <div id="user_header">Olá, <strong>{{ user_name }}</div>
-      <div id="logout" onclick="window.location.href={% url 'logout' %}" title="Sair">
+      <div id="logout" onclick="logout()" title="Sair">
+
         <img id="logout_icon_header" src="{% static 'img/logout_icon.png' %}">
       </div>
     </div>
@@ -49,75 +50,58 @@
       </div>
 
       <div id="container">
-        <div id="add-search">
+        <div id="new_service_export">
 
-          <div id="new-service">
-            
-            <div id="btn_new_service" onclick="showNewServiceForm()" title="Cadastrar novo serviço">
-              <img id="btn_add_img" src="{% static 'img/btn_add.png' %}">
-              Novo
-            </div>
-
-            <div id="btn_export" onclick="exportData()">
-              <img id="btn_export_img" src="{% static 'img/btn_export.png' %}">
-              Exportar
-            </div>
-
+          <div id="btn_new_service" onclick="showNewServiceForm()" title="Cadastrar novo serviço">
+            <img id="btn_add_img" src="{% static 'img/btn_add.png' %}">
+            Novo
           </div>
 
-          <!-- <div id="search">
-            <form method="GET" action="">
-              {% csrf_token %}
-              <input type="search" id="inp_search" name="search" placeholder="Digite sua busca...">
-              <button id="btn_search" type="submit" hint="Buscar" title="Pesquisar serviço ou usuário">
-                <img id="img_search" src="{% static 'img/search-icon.png' %}">
-              </button>
-            </form>
-          </div> -->
+          <div id="btn_export" onclick="exportData()">
+            <img id="btn_export_img" src="{% static 'img/btn_export.png' %}">
+            Exportar
+          </div>
+
         </div>
 
         <!-- Overlay and Modal Structure -->
         <div id="modal-overlay-new-service" class="modal-overlay-new-service"></div>
 
         <div id="new-service-modal" class="modal-new-service">
-          <p>Cadastrar serviço</p> <br>
+          <div class="title-modal">Cadastrar serviço</div>
+          <div class="form-modal">
+            <form id="service-form" autocomplete="off">
+              {% csrf_token %}
 
-          <form id="service-form">
-            {% csrf_token %}
+              <label for="service_name" class="label">Nome do Serviço:</label><br>
+              <input type="text" id="service_name" name="service_name" required><br><br>
 
-            <table id="table-modal-new-service">
-              <tr>
-                <td><label for="service_name">Nome do Serviço:</label></td>
-                <td><input type="text" id="service_name" name="service_name"></td>
-              </tr>
-              <tr>
-                <td><label for="user_name">Nome do Usuário:</label></td>
-                <td><input type="text" id="user_name" name="user_name"></td>
-              </tr>
-              <tr>
-                <td><label for="password">Senha:</label></td>
-                <td><input type="password" id="password" name="password" onclick="openPasswordGenerator('password')">
-                </td>
-              </tr>
-              <tr>
-                <td><button type="button" onclick="saveService()">Salvar</button></td>
-                <td><button type="button" onclick="cancelNewService()">Cancelar</button></td>
-              </tr>
-            </table>
-          </form>
+              <label for="user_name" class="label">Nome do Usuário:</label><br>
+              <input type="text" id="user_name" name="user_name" required><br><br>
+
+              <label for="password" class="label">Senha:</label><br>
+              <input type="text" id="password" name="password" onclick="openPasswordGenerator('password')"
+                required><br><br>
+
+              <div id="btn-modal-new-service">
+                <button type="button" class="salvar" onclick="validateAndSave()">Salvar</button>
+                <button type="button" class="cancelar" onclick="cancelNewService()">Cancelar</button>
+              </div>
+            </form>
+          </div>
         </div>
 
         <div id="list-services">
           <table id="tb_services">
             <thead>
               <tr>
-                <th id="id">ID</th>
-                <th>DATA DE CRIAÇÃO</th>
-                <th>ÚLTIMA ALTERAÇÃO</th>
-                <th>NOME DO SERVIÇO</th>
-                <th>NOME DO USUÁRIO</th>
-                <th>SENHA</th>
-                <th>AÇÕES</th>
+                <th id="id">Id</th>
+                <th>Data de criação</th>
+                <th>Última alteração</th>
+                <th>Nome do servidor</th>
+                <th>Nome do usuário</th>
+                <th>Senha</th>
+                <th>Ações</th>
               </tr>
             </thead>
             <tbody>
@@ -145,7 +129,7 @@
                   <!-- Botão para exibir/ocultar a senha -->
                   <button class="btn_toggle" title="Exibir senha" id="toggle_psw_{{ service.id }}"
                     onclick="revealPassword('{{ service.id }}')">
-                    <img id="img_search_{{ service.id }}" src="{% static 'img/eye_opened.png' %}">
+                    <img id="img_search_{{ service.id }}" src="{% static 'img/eye_closed.png' %}">
                   </button>
 
                   <!-- Botão para editar o serviço -->
@@ -193,12 +177,13 @@
       </ul>
     </div>
 
-    <div id="password-generator" class="modal">
-      <div class="modal-content">
-        <h2>Gerador de Senhas</h2>
-        <form id="generator-form">
+    <div id="password-generator">
+      <div class="title-modal">Gerador de Senhas</div>
+
+      <form id="generator-form">
+        <div class="modal-content">
           <div>
-            <label>Essa senha deve conter:</label><br><br>
+            <label>Essa senha deve ser:</label><br><br>
             <input type="radio" id="mixed" name="case" value="mixed" checked>
             <label for="mixed">Mixed Case</label><br>
             <input type="radio" id="lower" name="case" value="lower">
@@ -208,35 +193,38 @@
           </div>
           <br />
           <div>
+            <label>Essa senha pode conter:</label><br><br>
             <input type="checkbox" id="digits" name="digits" checked>
-            <label for="digits">Pode conter dígitos</label><br>
+            <label for="digits">Dígitos</label><br>
             <input type="checkbox" id="symbols" name="symbols" checked>
-            <label for="symbols">Pode conter símbolos</label><br>
+            <label for="symbols">Símbolos</label><br>
             <input type="checkbox" id="start-char" name="start-char" checked>
             <label for="start-char">Deve começar com um caracter</label>
           </div>
           <br>
           <div>
-            <label>Deve conter entre</label>
+            <label>Quantidade de caracteres:</label><br><br>
+            <label>Entre</label>
             <input type="number" id="min-length" name="min-length" min="4" max="20" value="8">
             <label>e</label>
             <input type="number" id="max-length" name="max-length" min="4" max="20" value="12">
             <label>caracteres</label>
           </div>
+        </div>
+        <div id="btn-password-generator">
+          <button type="button" id="generate-btn">Gerar</button>
+          <button type="button" id="continue-btn">Continuar</button>
+          <button type="button" id="cancel-btn">Cancelar</button>
+        </div>
+        <div>
           <br>
-          <div id="btn-password-generator">
-            <button type="button" id="generate-btn">Gerar</button>
-            <button type="button" id="continue-btn">Continuar</button>
-            <button type="button" id="cancel-btn">Cancelar</button>
-          </div>
-          <div>
-            <br>
-            <label for="generated-password">Senha gerada:</label>
-            <input type="text" id="generated-password">
-          </div>
-        </form>
-      </div>
+          <label for="generated-password" id="label-generated-password">Senha gerada:</label>
+          <input type="text" id="generated-password">
+        </div>
+      </form>
+
     </div>
+  </div>
 
 
 
@@ -297,37 +285,6 @@
     }
 
     let editingId = null;
-
-    // function enableEdit(serviceId) {
-    //   if (editingId !== null) {
-    //     cancelEdit(editingId);
-    //   }
-    //   document.getElementById('service_name_' + serviceId).style.display = 'none';
-    //   document.getElementById('edit_service_name_' + serviceId).style.display = 'inline';
-    //   document.getElementById('user_name_' + serviceId).style.display = 'none';
-    //   document.getElementById('edit_user_name_' + serviceId).style.display = 'inline';
-    //   document.getElementById('password_' + serviceId).style.display = 'none';
-    //   document.getElementById('edit_password_' + serviceId).style.display = 'inline';
-
-    //   //Alterar o botão de editar para o botão de salvar
-
-    //   const editButtonImg = document.getElementById('edit_btn_' + serviceId);
-    //   editButtonImg.src = "{% static 'img/btn_save.png' %}"; // Caminho para a imagem de salvar
-    //   editButtonImg.alt = "Salvar";
-    //   editButtonImg.title = "Salvar alterações";
-    //   editButtonImg.onclick = function () { saveChanges(serviceId); };
-
-    //   //Alterar o botão de deletar para o botão de cancelar
-
-    //   const cancelButtonImg = document.getElementById('delete_btn_' + serviceId);
-    //   cancelButtonImg.src = "{% static 'img/btn_cancel.png' %}"; // Caminho para a imagem de cancelar
-    //   cancelButtonImg.alt = "Cancelar";
-    //   cancelButtonImg.title = "Cancelar alterações";
-    //   cancelButtonImg.onclick = function () { cancelEdit(serviceId); };
-
-
-    //   editingId = serviceId;
-    // }
 
     function enableEdit(serviceId) {
       if (editingId !== null) {
@@ -510,6 +467,19 @@
       }, 300);  // O tempo aqui deve corresponder à duração da transição (0.3s)
     }
 
+    function validateAndSave() {
+      const serviceName = document.getElementById('service_name').value.trim();
+      const userName = document.getElementById('user_name').value.trim();
+      const password = document.getElementById('password').value.trim();
+
+      if (!serviceName || !userName || !password) {
+        alert('Por favor, preencha todos os campos.');
+        return; // Impede o envio do formulário
+      }
+
+      saveService(); // Chama a função de salvar se todos os campos estiverem preenchidos
+    }
+
     function saveService() {
       const form = document.getElementById('service-form');
       const formData = new FormData(form);
@@ -555,10 +525,10 @@
             // Toggle password visibility
             if (passwordSpan.textContent.trim() === '***************') {
               passwordSpan.textContent = data.password;
-              toggleImage.src = "{% static 'img/eye_closed.png' %}";
+              toggleImage.src = "{% static 'img/eye_opened.png' %}";
             } else {
               passwordSpan.textContent = '***************';
-              toggleImage.src = "{% static 'img/eye_opened.png' %}";
+              toggleImage.src = "{% static 'img/eye_closed.png' %}";
             }
           }
         })
@@ -635,6 +605,12 @@
         "initComplete": function () {
           // Adicionar classe ao input de pesquisa
           $('div.dataTables_filter input').addClass('custom-search');
+
+          // Ocultar o texto "Pesquisar" sem remover o campo de pesquisa
+          $('div.dataTables_filter label').contents().filter(function () {
+            return this.nodeType === 3; // Seleciona o texto puro
+          }).remove();
+
         },
         "columnDefs": [
           { "orderable": false, "targets": [5, 6] }  // Coluna de Senha (índice 5) e Ações (índice 6)
@@ -645,6 +621,10 @@
     function exportData() {
       // Faz uma requisição GET para a URL que irá gerar o CSV
       window.location.href = "{% url 'export_csv' %}";
+    }
+
+    function logout() {
+      window.location.href = "{% url 'logout' %}"
     }
 
   </script>
