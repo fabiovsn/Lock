@@ -47,6 +47,7 @@ body, html{
   border-color: #eee;
   border-width: 1px;
   color: #2c2c2c;
+  cursor: pointer;
 }
 
 .form-control::placeholder{
@@ -317,6 +318,8 @@ body, html{
   padding-bottom: 1.6rem;
   padding-left: 2.4rem;
   font-weight: 400;
+  margin-top: 6rem;
+  border-radius: 0 0 24px 24px;
 }
 
 /* FIM FOOTER */

@@ -63,7 +63,12 @@ def home(request):
                     return JsonResponse({'error': 'Nome do serviço já existe'}, status=400)
 
                 encrypted_password = encrypt_data(password)
-                new_service = Service(service_name=service_name, user_name=user_name, password=encrypted_password)
+
+                create_date = timezone.now()
+                update_date = timezone.now()
+
+                new_service = Service(service_name=service_name, user_name=user_name, password=encrypted_password, create_date=create_date, update_date=update_date)
+
                 new_service.save()
 
                 return JsonResponse({
