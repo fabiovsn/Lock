@@ -149,12 +149,12 @@ body, html{
 
 #navbar-container{
   display: flex;
-  height: 100%;
 }
 
 #navbar{
   width: 14rem;
   color: #2c2c2c;
+  background-color: #fff;
 }
 
 #navbar ul{
@@ -238,6 +238,7 @@ body, html{
   padding: 2rem;
   background-color: #ffffff;
   border-radius: 4px;
+  margin-bottom: 6rem;
 }
 
 #tb_services {
@@ -309,15 +310,13 @@ body, html{
 /* INÍCIO FOOTER */
 
 #footer {
-  height: 4vw;
-  background-color: #3f6deb;
-  color: white;
-  display: flex;
-  align-items: center;
-}
-
-#footer p{
-  margin-left: 2vw;
+  background-color: #fff;
+  color: #2c2c2c;
+  box-sizing: border-box;
+  padding-top: 1.6rem;
+  padding-bottom: 1.6rem;
+  padding-left: 2.4rem;
+  font-weight: 400;
 }
 
 /* FIM FOOTER */
@@ -326,12 +325,11 @@ body, html{
   position: absolute;
   display: none;
   z-index: 1000;
-  background-color: white;
-  border: 1px solid #ccc;
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
-  font-family: "Roboto", sans-serif;
-  font-size: 12px;
-  border-radius: 6px;
+  background-color: #ffffff;
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  font-size: 1rem;
+  border-radius: 4px;
+  font-weight: 300;
 }
 
 .context-menu hr{

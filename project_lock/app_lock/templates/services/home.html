@@ -98,7 +98,7 @@
                 <th id="id">Id</th>
                 <th>Data de criação</th>
                 <th>Última alteração</th>
-                <th>Nome do servidor</th>
+                <th>Nome do serviço</th>
                 <th>Nome do usuário</th>
                 <th>Senha</th>
                 <th>Ações</th>
@@ -224,11 +224,11 @@
       </form>
 
     </div>
+    <div id="footer">
+      <p>Desenvolvido pela Diretoria de Modernização e Inovação - 2024</p>
+    </div>
   </div>
 
-
-
-  </div>
   <!-- Fim container e menu -->
 
 
@@ -258,31 +258,57 @@
       currentServiceId = serviceId;
       const contextMenu = document.getElementById('context-menu');
       contextMenu.style.display = 'block';
-      contextMenu.style.top = `${event.pageY}px`;
-      contextMenu.style.left = `${event.pageX}px`;
+      const offset = 40;
+      contextMenu.style.top = `${event.pageY - offset}px`;
+      contextMenu.style.left = `${event.pageX - offset}px`;
     }
 
-    function copyToClipboard(type) {
+    async function copyToClipboard(type) {
       const serviceId = currentServiceId;
       let textToCopy = '';
+
       if (type === 'username') {
         textToCopy = document.getElementById('user_name_' + serviceId).textContent.trim();
+        await copyText(textToCopy, 'Nome do usuário copiado!');
       } else if (type === 'password') {
         const passwordSpan = document.getElementById('password_' + serviceId);
-        const editPasswordInput = document.getElementById('edit_password_' + serviceId);
         if (passwordSpan.textContent.trim() === '***************') {
-          textToCopy = editPasswordInput.value;
+          // Se a senha estiver oculta, vamos buscar a senha real
+          try {
+            const response = await fetch(`/reveal_password/${serviceId}/`, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': '{{ csrf_token }}'
+              }
+            });
+            const data = await response.json();
+            if (data.error) {
+              throw new Error(data.error);
+            }
+            await copyText(data.password, 'Senha copiada!');
+          } catch (error) {
+            console.error('Erro:', error);
+            alert('Erro ao buscar a senha: ' + error.message);
+          }
         } else {
+          // Se a senha estiver visível, copia diretamente
           textToCopy = passwordSpan.textContent.trim();
+          await copyText(textToCopy, 'Senha copiada!');
         }
       }
-      navigator.clipboard.writeText(textToCopy).then(() => {
-        alert(type === 'username' ? 'Nome do usuário copiado!' : 'Senha copiada!');
-      }).catch(err => {
-        alert('Erro ao copiar o texto: ' + err);
-      });
-      document.getElementById('context-menu').style.display = 'none';
     }
+
+    async function copyText(text, successMessage) {
+      try {
+        await navigator.clipboard.writeText(text);
+        alert(successMessage); // Mensagem de sucesso
+      } catch (err) {
+        alert('Erro ao copiar: ' + err);
+      }
+    }
+
+
 
     let editingId = null;
 
