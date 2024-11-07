@@ -215,11 +215,11 @@ body, html{
 }
 
 #btn_new_service:hover{
-  transform: scale(0.92);
+  transform: scale(0.96);
 }
 
 #btn_export:hover{
-  transform: scale(0.92);
+  transform: scale(0.96);
 }
 
 #btn_add_img, #btn_export_img{
