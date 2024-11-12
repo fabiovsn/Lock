@@ -13,10 +13,13 @@
 
 <body>
     <div class="login">
+        <div class = "logo_cldf">
+            <img src="{% static 'img/logo_cldf.png' %}">
+        </div>
         <div class="wrapper">
             <form class="form-signin" method="POST">
                 {% csrf_token %}
-                <h1>Faça o login</h1>
+                <h2>Login</h2>
                 {% if error %}
                     <p class="error">{{ error }}</p>
                 {% endif %}
@@ -25,7 +28,7 @@
                 <input type="password" class="form-control" name="password" placeholder="Senha" required="" /> <br>
                 <button class="btn_entrar_login" type="submit">Entrar</button>
             </form>
-            <p>Versão 0.8</p>
+            <p>Locker | Versão 0.8</p>
         </div>
     </div>
 
