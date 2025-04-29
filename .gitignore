@@ -1,0 +1,47 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Chaves de criptografia e arquivos sensíveis
+encryption_key.py
+
+# Banco de dados SQLite
+db.sqlite3
+
+# Configurações locais/dotenv
+.env
+*.env
+.env.*
+
+# Arquivos de log
+*.log
+
+# Cache do Django
+*.pyc
+*.pyo
+*.pyd
+*.pdb
+
+# Diretórios do Django
+/staticfiles/
+/media/
+/node_modules/
+
+# Arquivos de migração não versionados (se aplicável)
+*/migrations/__pycache__/
+*/migrations/*.pyc
+
+# IDEs e editores
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Backup
+*.bak
+*.tmp
+
+# Arquivos do sistema
+.DS_Store
+Thumbs.db
