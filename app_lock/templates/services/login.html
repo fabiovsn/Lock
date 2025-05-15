@@ -8,7 +8,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style2.css' %}">
 </head>
 
 <body>
@@ -29,10 +29,10 @@
                 {% endif %}
                 
                 <!-- Campo de nome de usuário -->
-                <input type="text" class="form-control" name="username" placeholder="Nome de usuário" required="" /><br>
+                <input type="text" placeholder="Nome de usuário" class="form-control" id="form-control-username" name="username" required="" /><br>
 
                 <!-- Campo de senha -->
-                <input type="password" class="form-control" name="password" placeholder="Senha" required="" /> <br>
+                <input type="password" placeholder="Senha" class="form-control" id="form-control-password" name="password" required="" /> <br>
 
                 <!-- Botão de login -->
                 <button class="btn_entrar_login" type="submit">Entrar</button>

@@ -78,39 +78,44 @@ def ldap_authenticate_view(request):
 
 logger = logging.getLogger(__name__)
 
+
 def login_view(request):
     try:
         if request.method == 'POST':
             username = request.POST.get('username')
             password = request.POST.get('password')
 
-            # Autenticação do superusuário local
-            if username == 'admin' and password == 'admin_password':
-                user = authenticate(request, username=username, password=password)
-                if user:
-                    login(request, user)
-                    return redirect('home')
-                else:
-                    return render(request, 'services/login.html', {'error': 'Usuário ou senha incorretos (admin)'})
-
-            # Autenticação via Active Directory
-            if autenticar_usuario(username, password, settings.LDAP_SERVER_URI):
-                user, created = User.objects.get_or_create(username=username)
-                if created:
-                    user.set_unusable_password()
-                    user.save()
-
-                # Criar ou garantir perfil
-                profile, profile_created = UserProfile.objects.get_or_create(user=user)
-                if not user.is_superuser and not profile.team:
-                    default_team, _ = Team.objects.get_or_create(name='Sem Time')
-                    profile.team = default_team
-                    profile.save()
-
+            # Verifica se o usuário é superusuário (admin) e faz login localmente
+            user = authenticate(request, username=username, password=password)
+            if user and user.is_superuser:
                 login(request, user)
                 return redirect('home')
 
-            return render(request, 'services/login.html', {'error': 'Falha na autenticação do Active Directory'})
+            # Caso contrário, tenta autenticar via Active Directory (LDAP)
+            server_address = settings.LDAP_SERVER_URI
+            if autenticar_usuario(username, password, server_address):
+                user, created = User.objects.get_or_create(username=username)
+                if created:
+                    user.set_unusable_password()  # Definir senha inválida ao criar o usuário via LDAP
+                    user.save()
+
+                # Criar perfil se não existir
+                try:
+                    profile, profile_created = UserProfile.objects.get_or_create(user=user)
+                    if profile_created:
+                        if user.is_superuser:
+                            profile.team = None  # O superusuário pode ficar sem time ou ser atribuído a um time específico
+                        else:
+                            default_team, _ = Team.objects.get_or_create(name='Sem Time')
+                            profile.team = default_team
+                        profile.save()
+                except Exception as e:
+                    logger.error(f"Erro ao criar UserProfile para {username}: {e}")
+
+                login(request, user)
+                return redirect('home')
+            else:
+                return render(request, 'services/login.html', {'error': 'Falha na autenticação do Active Directory'})
 
         return render(request, 'services/login.html')
 

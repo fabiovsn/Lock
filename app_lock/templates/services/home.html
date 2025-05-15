@@ -3,7 +3,7 @@
 
 <head>
   {% load static %}
-  <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/style2.css' %}">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -18,218 +18,218 @@
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
 
-  <title>Locker - Gerenciador de senhas</title>;
+  <title>Locker - Gerenciador de senhas</title>
 </head>
 
 <body>
 
+  <!-- Fim header -->
 
   <div class="content">
-
-    <!-- Header -->
-
-    <div id="header">
-      <!-- <img id="logo_header" src="{% static 'img/cadeado_logo.png' %}"> -->
-      <p id="name_header">LOCKER</p>
-      <img id="notification_alert" src="{% static 'img/packard-bell.png' %}">
-      <div id="user_header">Olá, <strong>{{ user_name }}</div>
-      <div id="logout" onclick="logout()" title="Sair">
-
-        <img id="logout_icon_header" src="{% static 'img/logout_icon.png' %}">
+    <div class="left_side">
+      <div id="name_header">
+        LOCKER
       </div>
-    </div>
-
-    <!-- Fim header -->
-
-    <div id="navbar-container">
       <div id="navbar">
         <ul>
-          <li>Home</li>
-          <li>Sobre</li>
+          <li><img id="home_icon" src="{% static 'img/home_icon.png' %}">Home</li>
+          <li><img id="about_icon" src="{% static 'img/about_icon.png' %}">Sobre</li>
         </ul>
       </div>
+    </div>
 
-      <div id="container">
-        <div id="new_service_export">
+    <div id="container">
 
-          <div id="btn_new_service" onclick="showNewServiceForm()" title="Cadastrar novo serviço">
-            <img id="btn_add_img" src="{% static 'img/btn_add.png' %}">
-            Novo
-          </div>
-
-          <div id="btn_export" onclick="exportData()">
-            <img id="btn_export_img" src="{% static 'img/btn_export.png' %}">
-            Exportar
-          </div>
-
+      <!-- Header -->
+      <div class="user_logout">
+        <div id="user">
+          Olá, <strong>{{ user_name }}
         </div>
-
-        <!-- Overlay and Modal Structure -->
-        <div id="modal-overlay-new-service" class="modal-overlay-new-service"></div>
-
-        <div id="new-service-modal" class="modal-new-service">
-          <div class="title-modal">Cadastrar serviço</div>
-          <div class="form-modal">
-            <form id="service-form" autocomplete="off">
-              {% csrf_token %}
-
-              <label for="service_name" class="label">Nome do Serviço:</label><br>
-              <input type="text" id="service_name" name="service_name" required><br><br>
-
-              <label for="user_name" class="label">Nome do Usuário:</label><br>
-              <input type="text" id="user_name" name="user_name" required><br><br>
-
-              <label for="password" class="label">Senha:</label><br>
-              <input type="text" id="password" name="password" onclick="openPasswordGenerator('password')"
-                required><br><br>
-
-              <div id="btn-modal-new-service">
-                <button type="button" class="salvar" onclick="validateAndSave()">Salvar</button>
-                <button type="button" class="cancelar" onclick="cancelNewService()">Cancelar</button>
-              </div>
-            </form>
-          </div>
-        </div>
-
-        <div id="list-services">
-          <table id="tb_services">
-            <thead>
-              <tr>
-                <th id="id">Id</th>
-                <th>Data de criação</th>
-                <th>Última alteração</th>
-                <th>Nome do serviço</th>
-                <th>Nome do usuário</th>
-                <th>Senha</th>
-                <th>Ações</th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for service in services %}
-              <tr id="row_{{ service.id }}" oncontextmenu="showContextMenu(event, '{{ service.id }}')">
-                <td>{{ service.id }}</td>
-                <td>{{ service.create_date|date:"Y-m-d H:i" }}</td>
-                <td id="update_date_{{ service.id }}">{{ service.update_date|date:"Y-m-d H:i" }}</td>
-                <td>
-                  <span id="service_name_{{ service.id }}">{{ service.service_name }}</span>
-                  <input class="edit_service_name" id="edit_service_name_{{ service.id }}" type="text"
-                    style="display: none;" value="{{ service.service_name }}">
-                </td>
-                <td>
-                  <span id="user_name_{{ service.id }}">{{ service.user_name }}</span>
-                  <input class="edit_user_name" id="edit_user_name_{{ service.id }}" type="text" style="display: none;"
-                    value="{{ service.user_name }}">
-                </td>
-                <td>
-                  <span id="password_{{ service.id }}"> *************** </span>
-                  <input class="edit_password" id="edit_password_{{ service.id }}" type="text" style="display: none;"
-                    onclick="openPasswordGenerator('edit_password_{{ service.id }}')">
-                </td>
-                <td id="acoes">
-                  <!-- Botão para exibir/ocultar a senha -->
-                  <button class="btn_toggle" title="Exibir senha" id="toggle_psw_{{ service.id }}"
-                    onclick="revealPassword('{{ service.id }}')">
-                    <img id="img_search_{{ service.id }}" src="{% static 'img/eye_closed.png' %}">
-                  </button>
-
-                  <!-- Botão para editar o serviço -->
-                  <button class="btn_edit" title="Editar registro" onclick="enableEdit('{{ service.id }}')">
-                    <img id="edit_btn_{{ service.id }}" src="{% static 'img/btn_edit.png' %}">
-                  </button>
-
-                  <!-- Botão para salvar o serviço (oculto inicialmente) -->
-                  <button class="btn_save" title="Salvar edição" style="display: none;"
-                    onclick="saveChanges('{{ service.id }}')">
-                    <img id="save_btn_{{ service.id }}" src="{% static 'img/btn_save.png' %}">
-                  </button>
-
-                  <!-- Botão para excluir o serviço -->
-                  <button class="btn_delete" title="Excluir registro" onclick="deleteService('{{ service.id }}')">
-                    <img id="delete_btn_{{ service.id }}" src="{% static 'img/btn_delete.png' %}">
-                  </button>
-
-                  <!-- Botão para cancelar edição (oculto inicialmente) -->
-                  <button class="btn_cancel" title="Cancelar edição" id="cancel_btn_{{ service.id }}"
-                    style="display: none;" onclick="cancelEdit('{{ service.id }}')">
-                    <img id="cancel_img_{{ service.id }}" src="{% static 'img/btn_cancel.png' %}">
-                  </button>
-                </td>
-              </tr>
-              {% endfor %}
-            </tbody>
-          </table>
-
+  
+        <div id="logout" onclick="logout()" title="Sair">
+          <img id="logout_icon_header" src="{% static 'img/logout_icon.png' %}">
         </div>
       </div>
-    </div>
+      <div id="new_service_export">
 
-    <!-- <div id="footer">
-      <p>Desenvolvido pela Diretoria de Modernização e Inovação - DMI / 2024</p>
-    </div> -->
-
-    <div class="context-menu" id="context-menu">
-      <ul>
-        <li onclick="copyToClipboard('username')">Copiar nome do usuário</li>
-        <li onclick="copyToClipboard('password')">Copiar senha</li>
-        <hr>
-        <li onclick="enableEditContextMenu()">Editar</li>
-        <li onclick="deleteServiceContextMenu()">Excluir</li>
-      </ul>
-    </div>
-
-    <div id="password-generator">
-      <div class="title-modal">Gerador de Senhas</div>
-
-      <form id="generator-form">
-        <div class="modal-content">
-          <div>
-            <label>Essa senha deve ser:</label><br><br>
-            <input type="radio" id="mixed" name="case" value="mixed" checked>
-            <label for="mixed">Mixed Case</label><br>
-            <input type="radio" id="lower" name="case" value="lower">
-            <label for="lower">Lower Case</label><br>
-            <input type="radio" id="upper" name="case" value="upper">
-            <label for="upper">Upper Case</label>
-          </div>
-          <br />
-          <div>
-            <label>Essa senha pode conter:</label><br><br>
-            <input type="checkbox" id="digits" name="digits" checked>
-            <label for="digits">Dígitos</label><br>
-            <input type="checkbox" id="symbols" name="symbols" checked>
-            <label for="symbols">Símbolos</label><br>
-            <input type="checkbox" id="start-char" name="start-char" checked>
-            <label for="start-char">Deve começar com um caracter</label>
-          </div>
-          <br>
-          <div>
-            <label>Quantidade de caracteres:</label><br><br>
-            <label>Entre</label>
-            <input type="number" id="min-length" name="min-length" min="4" max="20" value="8">
-            <label>e</label>
-            <input type="number" id="max-length" name="max-length" min="4" max="20" value="12">
-            <label>caracteres</label>
-          </div>
+        <div id="btn_new_service" onclick="showNewServiceForm()" title="Cadastrar novo serviço">
+          <img id="btn_add_img" src="{% static 'img/btn_add.png' %}">
+          Novo
         </div>
-        <div id="btn-password-generator">
-          <button type="button" id="generate-btn">Gerar</button>
-          <button type="button" id="continue-btn">Continuar</button>
-          <button type="button" id="cancel-btn">Cancelar</button>
-        </div>
-        <div>
-          <br>
-          <label for="generated-password" id="label-generated-password">Senha gerada:</label>
-          <input type="text" id="generated-password">
-        </div>
-      </form>
 
-    </div>
-    <div id="footer">
-      <p>Desenvolvido pela <strong>Diretoria de Modernização e Inovação</strong> - 2024</p>
+        <div id="btn_export" onclick="exportData()">
+          <img id="btn_export_img" src="{% static 'img/btn_export.png' %}">
+          Exportar
+        </div>
+
+      </div>
+
+      <!-- Overlay and Modal Structure -->
+      <div id="modal-overlay-new-service" class="modal-overlay-new-service"></div>
+
+      <div id="new-service-modal" class="modal-new-service">
+        <div class="title-modal">Cadastrar serviço</div>
+        <div class="form-modal">
+          <form id="service-form" autocomplete="off">
+            {% csrf_token %}
+
+            <label for="service_name" class="label">Nome do Serviço:</label><br>
+            <input type="text" id="service_name" name="service_name" required><br><br>
+
+            <label for="user_name" class="label">Nome do Usuário:</label><br>
+            <input type="text" id="user_name" name="user_name" required><br><br>
+
+            <label for="password" class="label">Senha:</label><br>
+            <input type="text" id="password" name="password" onclick="openPasswordGenerator('password')"
+              required><br><br>
+
+            <div id="btn-modal-new-service">
+              <button type="button" class="salvar" onclick="validateAndSave()">Salvar</button>
+              <button type="button" class="cancelar" onclick="cancelNewService()">Cancelar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div id="list-services">
+        <table id="tb_services">
+          <thead>
+            <tr>
+              <th id="id">Id</th>
+              <th>Data de criação</th>
+              <th>Última alteração</th>
+              <th>Nome do serviço</th>
+              <th>Nome do usuário</th>
+              <th>Senha</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for service in services %}
+            <tr id="row_{{ service.id }}" oncontextmenu="showContextMenu(event, '{{ service.id }}')">
+              <td>{{ service.id }}</td>
+              <td>{{ service.create_date|date:"Y-m-d H:i" }}</td>
+              <td id="update_date_{{ service.id }}">{{ service.update_date|date:"Y-m-d H:i" }}</td>
+              <td>
+                <span id="service_name_{{ service.id }}">{{ service.service_name }}</span>
+                <input class="edit_service_name" id="edit_service_name_{{ service.id }}" type="text"
+                  style="display: none;" value="{{ service.service_name }}">
+              </td>
+              <td>
+                <span id="user_name_{{ service.id }}">{{ service.user_name }}</span>
+                <input class="edit_user_name" id="edit_user_name_{{ service.id }}" type="text" style="display: none;"
+                  value="{{ service.user_name }}">
+              </td>
+              <td>
+                <span id="password_{{ service.id }}"> *************** </span>
+                <input class="edit_password" id="edit_password_{{ service.id }}" type="text" style="display: none;"
+                  onclick="openPasswordGenerator('edit_password_{{ service.id }}')">
+              </td>
+              <td id="acoes">
+                <!-- Botão para exibir/ocultar a senha -->
+                <button class="btn_toggle" title="Exibir senha" id="toggle_psw_{{ service.id }}"
+                  onclick="revealPassword('{{ service.id }}')">
+                  <img id="img_search_{{ service.id }}" src="{% static 'img/eye_closed.png' %}">
+                </button>
+
+                <!-- Botão para editar o serviço -->
+                <button class="btn_edit" title="Editar registro" onclick="enableEdit('{{ service.id }}')">
+                  <img id="edit_btn_{{ service.id }}" src="{% static 'img/btn_edit.png' %}">
+                </button>
+
+                <!-- Botão para salvar o serviço (oculto inicialmente) -->
+                <button class="btn_save" title="Salvar edição" style="display: none;"
+                  onclick="saveChanges('{{ service.id }}')">
+                  <img id="save_btn_{{ service.id }}" src="{% static 'img/btn_save.png' %}">
+                </button>
+
+                <!-- Botão para excluir o serviço -->
+                <button class="btn_delete" title="Excluir registro" onclick="deleteService('{{ service.id }}')">
+                  <img id="delete_btn_{{ service.id }}" src="{% static 'img/btn_delete.png' %}">
+                </button>
+
+                <!-- Botão para cancelar edição (oculto inicialmente) -->
+                <button class="btn_cancel" title="Cancelar edição" id="cancel_btn_{{ service.id }}"
+                  style="display: none;" onclick="cancelEdit('{{ service.id }}')">
+                  <img id="cancel_img_{{ service.id }}" src="{% static 'img/btn_cancel.png' %}">
+                </button>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+
+      </div>
+      <div id="footer">
+        <p>Desenvolvido pela <strong>Diretoria de Modernização e Inovação</strong> - 2025</p>
+      </div>
     </div>
   </div>
 
-  <!-- Fim container e menu -->
+  <!-- <div id="footer">
+      <p>Desenvolvido pela Diretoria de Modernização e Inovação - DMI / 2024</p>
+    </div> -->
+
+  <div class="context-menu" id="context-menu">
+    <ul>
+      <li onclick="copyToClipboard('username')">Copiar nome do usuário</li>
+      <li onclick="copyToClipboard('password')">Copiar senha</li>
+      <hr>
+      <li onclick="enableEditContextMenu()">Editar</li>
+      <li onclick="deleteServiceContextMenu()">Excluir</li>
+    </ul>
+  </div>
+
+  <div id="password-generator">
+    <div class="title-modal">Gerador de Senhas</div>
+
+    <form id="generator-form">
+      <div class="modal-content">
+        <div>
+          <label>Essa senha deve ser:</label><br><br>
+          <input type="radio" id="mixed" name="case" value="mixed" checked>
+          <label for="mixed">Mixed Case</label><br>
+          <input type="radio" id="lower" name="case" value="lower">
+          <label for="lower">Lower Case</label><br>
+          <input type="radio" id="upper" name="case" value="upper">
+          <label for="upper">Upper Case</label>
+        </div>
+        <br />
+        <div>
+          <label>Essa senha pode conter:</label><br><br>
+          <input type="checkbox" id="digits" name="digits" checked>
+          <label for="digits">Dígitos</label><br>
+          <input type="checkbox" id="symbols" name="symbols" checked>
+          <label for="symbols">Símbolos</label><br>
+          <input type="checkbox" id="start-char" name="start-char" checked>
+          <label for="start-char">Deve começar com um caracter</label>
+        </div>
+        <br>
+        <div>
+          <label>Quantidade de caracteres:</label><br><br>
+          <label>Entre</label>
+          <input type="number" id="min-length" name="min-length" min="4" max="20" value="8">
+          <label>e</label>
+          <input type="number" id="max-length" name="max-length" min="4" max="20" value="12">
+          <label>caracteres</label>
+        </div>
+      </div>
+      <div id="btn-password-generator">
+        <button type="button" id="generate-btn">Gerar</button>
+        <button type="button" id="continue-btn">Continuar</button>
+        <button type="button" id="cancel-btn">Cancelar</button>
+      </div>
+      <div>
+        <br>
+        <label for="generated-password" id="label-generated-password">Senha gerada:</label>
+        <input type="text" id="generated-password">
+      </div>
+    </form>
+
+  </div>
+
+
+  <!-- Início dos scripts javascript -->
 
 
 
@@ -363,9 +363,6 @@
       editingId = serviceId;
     }
 
-
-
-
     function cancelEdit(serviceId) {
       // Debug: Log para verificar se a função está sendo chamada
       console.log("Cancel edit for serviceId:", serviceId);
@@ -393,9 +390,6 @@
       // Redefinir o ID de edição
       editingId = null;
     }
-
-
-
 
     function saveChanges(serviceId) {
       const serviceName = document.getElementById('edit_service_name_' + serviceId).value;

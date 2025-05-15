@@ -1,0 +1,617 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body, html{
+  font-family: "Roboto", sans-serif;
+  font-style: normal;
+  background-color: #f9f9f9;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
+
+/* LOGIN */
+
+.login{
+  
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.logo_cldf{
+  margin-top: 4rem;
+  margin-bottom: 4rem;
+}
+
+.wrapper{
+  background-color: #fff;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #dadada;
+  border-radius: 4px;
+  padding: 2rem;
+}
+
+.wrapper h2{
+  color: #374151;
+  margin: 0;
+  margin-bottom: 4rem;
+}
+
+#form-control-username, #form-control-password, .btn_entrar_login{
+  width: 20rem;
+  height: 2.8rem;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size: 1.2rem;
+  cursor: pointer;
+  border: 0;
+}
+
+#form-control-username{
+  margin-bottom: 0.8rem;
+  padding-left: 0.8rem;
+  background-color: #e8f0fd;
+}
+
+#form-control-password{
+  margin-bottom: 2.4rem;
+  padding-left: 0.8rem;
+  background-color: #e8f0fd;
+}
+
+#form-control-username::placeholder{
+  color: #7497f7;
+}
+
+#form-control-password::placeholder{
+  color: #7497f7;
+}
+
+.form-control:focus {
+  outline: none; /* Remove a borda padrão ao focar */
+  border-color: #7497f7; /* Borda azul ao focar */
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25); /* Adiciona um leve brilho azul ao focar */
+}
+
+.btn_entrar_login{
+  background-color: #3B82F6;
+  color: #fff;
+  margin-bottom: 2.4rem;
+}
+
+.btn_entrar_login:hover{
+  background-color: #1e72fa;
+}
+
+.wrapper p{
+  color: #b9b9b9;
+  margin: 0;
+}
+
+/* FIM LOGIN */
+
+
+.content{
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+}
+
+.left_side{
+  display: flex;
+  flex-direction: column;
+  background-color: #3B82F6;
+}
+
+/* HEADER */
+
+#name_header{
+  margin: 2rem 0 2rem 2rem;
+  font-size: 28px;
+  color: #ffffff;
+}
+
+.user_logout{
+  display: flex;
+  flex-direction: row;
+  margin-left: 85%;
+  margin-top: 2rem;
+  align-items: center;
+}
+
+#user{
+  color: #374151;
+}
+
+#logout_icon_header{
+  width: 1.6rem;
+  height: 1.6rem;
+  margin-left: 4rem;
+  cursor: pointer;
+}
+
+#logout_icon_header:hover{
+  transform: scale(0.92);
+}
+
+/* FIM HEADER */
+
+/* MENU */
+
+#navbar{
+  width: 14rem;
+  height: 100%;
+}
+
+#navbar ul{
+  padding: 0;
+  margin-left: 2rem;
+}
+
+#navbar li{
+  list-style-type: none;
+  height: 2.4rem;
+  width: 10rem;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  border-radius: 4px;
+  color: #ffffff;
+  padding-left: 2rem;
+}
+
+#navbar li:hover{
+  background-color: #3170d6;
+}
+
+#home_icon, #about_icon{
+  width: 1.2rem;
+  height: 1.2rem;
+  margin: 0;
+  margin-right: 1.2rem;
+}
+
+/* FIM MENU */
+
+#container {
+  background-color: #f9f9f9;
+}
+
+/* BOTÕES NOVO E EXPORTAR */
+
+#new_service_export {
+  margin-top: 2.4rem;
+  display: flex;
+}
+
+#btn_new_service, #btn_export{
+  width: 8rem;
+  height: 2.8rem;
+  border-radius: 4px;
+  border-style: none;
+  cursor: pointer;
+  margin-left: 4rem;
+  color: #fff;
+  font-weight: 400;
+  padding: 0;
+  align-items: center;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+#btn_new_service{
+  background-color: #3B82F6;
+}
+
+#btn_export{
+  background-color: #7a7d85;
+  margin-left: 2rem;
+}
+
+#btn_new_service:hover{
+  background-color: #3170d6;
+}
+
+#btn_export:hover{
+  background-color: #6B7280;
+}
+
+#btn_add_img, #btn_export_img{
+  width: 1.6rem;
+  height: 1.6rem;
+}
+
+/* FIM BOTÕES NOVO E EXPORTAR */
+
+/* FIM CONTAINER */
+
+/* TABELA DE SERVIÇOS */
+
+#list-services {
+  margin-left: 3rem;
+  margin-top: 4rem;
+  padding: 1.4rem 2rem 2.4rem 2rem;
+  background-color: #ffffff;
+  border-radius: 6px;
+  width: 100rem;
+}
+
+#tb_services {
+  text-align: center;
+}
+
+#tb_services th{
+  height: 2rem;
+  color:#374151;
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
+  font-style: normal;
+  font-size: 16px;
+  text-align: center;
+}
+
+#tb_services #id{
+  width: 4rem;
+}
+
+#tb_services td{
+  font-size: 14px;
+  color: #374151;
+  height: 2.4rem;
+  font-weight: 400;
+  font-style: normal;
+}
+
+#tb_services tr:nth-child(even) {
+  background-color: #e8f0fd;
+}
+#tb_services tr:nth-child(odd) {
+  background-color: #ffffff;
+}
+
+#tb_services tr:hover {
+  background-color: #c3d7f7;
+}
+
+/* FIM TABELA DE SERVIÇOS */
+
+/* BOTOES TABELA DE SERVICOS */
+
+#acoes{
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  margin: 0;
+}
+
+.btn_toggle, .btn_edit, .btn_delete, .btn_save, .btn_cancel{
+  border-style: none;
+  background: none;
+  cursor: pointer;
+}
+
+#acoes img{
+  width: 1.6rem;
+  height: 1.6rem;
+}
+
+#acoes img:hover{
+  transform: scale(0.92);
+}
+
+/* FIM BOTOES TABELA DE SERVICOS */
+
+/* INÍCIO FOOTER */
+
+#footer {
+  color: #374151;
+  box-sizing: border-box;
+  padding-top: 1.6rem;
+  padding-bottom: 1.6rem;
+  padding-left: 2.4rem;
+  font-weight: 400;
+  margin-top: 18%;
+}
+
+/* FIM FOOTER */
+
+.context-menu {
+  position: absolute;
+  display: none;
+  z-index: 1000;
+  background-color: #ffffff;
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  font-size: 1rem;
+  border-radius: 4px;
+  font-weight: 300;
+}
+
+.context-menu hr{
+  width: 98%;
+  color: rgb(134, 133, 133);
+}
+
+.context-menu ul {
+  list-style-type: none;
+  padding: 10px;
+  margin: 0;
+}
+
+.context-menu ul li {
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.context-menu ul li:hover {
+  background-color: #eee;
+}
+
+
+.edit_service_name{
+  width: 12rem;
+  width: 100%;
+  height: 100%;
+  border-style: none;
+}
+
+.edit_user_name{
+  width: 12rem;
+  width: 100%;
+  height: 100%;
+  border-style: none;
+}
+
+.edit_password{
+  width: 12rem;
+  width: 100%;
+  height: 100%;
+  border-style: none;
+}
+
+/* Modal do gerador de senhas */
+
+/* Password generator */
+
+#password-generator {
+  display: none;
+  position: fixed;
+  z-index: 1002;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  height: auto;
+  width: 32rem;
+  border-radius: 4px;
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  box-sizing: border-box; /* Garante que o padding não afete a largura total */
+  font-size: 1rem;
+  font-weight: 300;
+  background-color: #fff;
+}
+
+.modal-content {
+  width: 100%;
+  height: 100%;
+  margin: 2rem 0 2.8rem 2rem;
+}
+
+#btn-password-generator{
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-evenly;
+  margin-bottom: 2rem;
+}
+
+#btn-password-generator button{
+  width: 8rem;
+  height: 2.8rem;
+  
+  border-radius: 4px;
+  border-style: none;
+  font-size: 1rem;
+  color: #2c2c2c;
+  cursor: pointer;
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+#generate-btn{
+  background-color: #b1c8ec;
+}
+
+#continue-btn{
+  background-color: #b1ecd8;
+}
+
+#cancel-btn{
+  background-color: #eaebea;
+}
+
+#generate-btn:hover, #cancel-btn:hover, #continue-btn:hover{
+  transform: scale(0.92);
+}
+
+#label-generated-password{
+  margin-left: 2rem;
+}
+
+#generated-password{
+  width: 20rem;
+  height: 1.6rem;
+  font-size: 1.2rem;
+  margin-bottom: 4rem;
+  border-radius: 4px;
+}
+
+/* Fim do modal do gerador de senhas */
+
+
+/* MODAL DO NOVO SERVIÇO */
+
+.modal-overlay-new-service {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+/* Modal Window */
+
+.title-modal{
+  background-color: #E5E7EB;
+  border-radius: 4px 4px 0 0;
+  padding: 0.8rem;
+  font-weight: 400;
+  font-size: 1.2rem;
+  color: #2c2c2c;
+}
+
+.form-modal{
+  margin-top: 2.8rem;
+}
+
+.label{
+  margin-bottom: 3.4rem;
+  font-weight: 400;
+  margin-left: 2rem;
+  box-sizing: border-box; /* Garante que o padding não afete a largura total */
+}
+
+.form-modal input{
+  width: 20rem;
+  height: 1.8rem;
+  border-radius: 4px;
+  font-size: 16px;
+  border-width: 1px;
+  margin-left: 2rem;
+  box-sizing: border-box; /* Garante que o padding não afete a largura total */
+}
+
+.modal-new-service {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.8);
+  background-color: #fff;
+  z-index: 1001;
+  border-radius: 4px;
+  height: 28rem;
+  width: 24rem;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+  font-size: 1rem;
+}
+
+.modal-new-service.active {
+  display: block;
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.modal-overlay-new-service.active {
+  display: block;
+  opacity: 1;
+}
+
+#btn-modal-new-service{
+  display: flex;
+  margin-top: 3.6rem;
+  width: 100%;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+#btn-modal-new-service button{
+  width: 8rem;
+  height: 2.8rem;
+  border-radius: 6px;
+  border-style: none;
+  font-size: 1rem;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+#btn-modal-new-service .salvar{
+  background-color: #10B981;
+}
+
+#btn-modal-new-service .cancelar{
+  background-color: #b6b6b6;
+}
+
+#btn-modal-new-service .salvar:hover{
+  background-color: #109c6d;
+}
+
+#btn-modal-new-service .cancelar:hover{
+  background-color: #979797;
+}
+
+
+/* FIM MODAL DO NOVO SERVIÇO */
+
+/* Início DataTables */
+
+.custom-search {
+  width: 400px;           /* Define a largura */
+  border: 2px solid #ccc; /* Borda personalizada */
+  border-radius: 5px;     /* Bordas arredondadas */
+  font-size: 16px;        /* Tamanho da fonte */
+  padding-left: 2rem !important; /* Força o padding à esquerda */
+  box-sizing: border-box; /* Garante que o padding não afete a largura total */
+}
+
+/* Estilo para o container do campo de pesquisa */
+.dataTables_filter {
+  margin-top: 20px;    /* Espaçamento superior */
+  margin-bottom: 20px;    /* Espaçamento inferior */
+}
+
+.dataTables_length {
+  margin-top: 20px;  /* Define a margem superior */
+  font-weight: normal;
+}
+
+.dataTables_paginate {
+  margin-top: 10px;  /* Adiciona margem superior */
+}
+
+/* Fim DataTables */
+
+/* Animações */
+
+.logo_cldf {
+  position: relative;
+  animation: cairDoTopo 1s ease-out forwards;
+  opacity: 0;
+}
+
+@keyframes cairDoTopo {
+  0% {
+    top: -200px;
+    opacity: 0;
+  }
+  100% {
+    top: 0;
+    opacity: 1;
+  }
+}
+
+
